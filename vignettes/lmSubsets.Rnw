@@ -55,7 +55,7 @@
 \newcommand{\dquote}[1]{``{#1}''}
 \newcommand{\fct}[1]{\code{#1()}}
 \newcommand{\class}[1]{\dquote{\code{#1}}}
-\newcommand{\drop}{\mathsf{drop}}
+\newcommand{\drop}{\text{drop}}
 \renewcommand{\hat}{\widehat}
 
 \newlength{\Rwidth}
@@ -111,7 +111,7 @@
 
 \begin{document}
 
-<<preliminaries, echo=FALSE, results=hide>>=
+<<preamble, echo=FALSE, results=hide>>=
 options(width = 70, prompt = "R> ", continue = "+  ")
 library("lmSubsets")
 data("AirPollution", package = "lmSubsets")
@@ -137,7 +137,7 @@ submodel~\citep{miller:02}.  Consider the standard regression model
 \begin{equation}
   \label{eq:olm}
   %
-  y=X\beta+\epsilon\text{,}
+  y=X\beta+\epsilon\text{ ,}
 \end{equation}
 %
 where $y\in\Rset^M$ is the output variable, $X\in\Rset^{M\times N}$ is
@@ -146,13 +146,13 @@ coefficient vector, and $\epsilon\in\Rset^M$ is the noise vector.  The
 ordinary least squares (OLS) estimator of $\beta$ is the solution of
 %
 \begin{equation}
-  \hat{\beta}_{\text{OLS}}=\argmin_{\beta}\rss(\beta)\text{,}
+  \hat{\beta}_{\text{OLS}}=\argmin_{\beta}\rss(\beta)\text{ ,}
 \end{equation}
 %
 where the residual sum of squares (RSS) of $\beta$ is given by
 %
 \begin{equation}
-  \rss(\beta)=\norm{y-X\beta}^2\text{.}
+  \rss(\beta)=\norm{y-X\beta}^2\text{ .}
 \end{equation}
 %
 That is, $\hat{\beta}_{\text{OLS}}$ minimizes the norm of the residual
@@ -169,7 +169,7 @@ solving
 \begin{equation}
   \label{eq:best_subset}
   %
-  S^*=\argmin_{S\subseteq V}f(S)\text{.}
+  S^*=\argmin_{S\subseteq V}f(S)\text{ .}
 \end{equation}
 %
 Here, the value $f(S)=F(n,\rho)$ is seen as a function of $n=\card{S}$
@@ -181,17 +181,17 @@ is
 \begin{equation}
   \label{eq:f:monotonicity}
   %
-  \rss(S_1)\leq\rss(S_2)\Rightarrow f(S_1)\leq f(S_2)\text{,}
+  \rss(S_1)\leq\rss(S_2)\Rightarrow f(S_1)\leq f(S_2)\text{ ,}
   \quad\text{when}\quad\card{S_1}=\card{S_2}\text{.}
 \end{equation}
 
-Common selection criteria exhibit this property, such as those
-belonging to the AIC family defined by the formula
+Common information criteria (IC) exhibit this property, such as those
+belonging to the AIC family and defined by the formula
 %
 \begin{equation}
   \label{eq:aic}
   %
-  \text{AIC}_k=M+M\log2\pi+M\log(\text{RSS}/M)+k(n+1)\text{,}
+  \text{AIC}_k=M+M\log2\pi+M\log(\text{RSS}/M)+k(n+1)\text{ ,}
 \end{equation}
 %
 where the scalar $k$ represents a penalty per parameter ($k>0$).  The
@@ -200,7 +200,7 @@ respectively~\citep{miller:02}.  It follows
 that~\eqref{eq:best_subset} is equivalent to
 %
 \begin{equation*}
-  S^*=S^*_\nu\text{,}\quad\text{where}\quad
+  S^*=S^*_\nu\text{ ,}\quad\text{where}\quad
   \nu=\argmin_{n}f(S^*_n)
 \end{equation*}
 %
@@ -210,7 +210,7 @@ and
   \label{eq:all_subsets}
   %
   S^*_n=\argmin_{\card{S}=n}\rss(S)
-  \quad\text{for}\quad n=1,\dots,N\text{.}
+  \quad\text{for}\quad n=1,\dots,N\text{ .}
 \end{equation}
 %
 Finding the solution to~\eqref{eq:all_subsets} is called the
@@ -224,17 +224,18 @@ can be seen as an indirect, two-stage procedure:
   such that $f(S^*_\nu)$ is minimal.
 \end{description}
 %
-Note that the computational strategy may be optimized for a specific
-selection criterion when solving the best-subset selection
-problem~\eqref{eq:best_subset} directly, thus lowering the
-computational cost.  On the other hand, by explicitly solving the
-all-subsets regression problem~\eqref{eq:all_subsets} once and for all
-(Stage 1), the list of all $N$ submodels is made readily available for
-further exploration: evaluating multiple criterion functions (e.g.,
-AIC and BIC), or conducting a more elaborate statistical inference,
-can be performed at a negligible cost (Stage 2).  Thus, it can be
-advisable to adopt a two-stage approach within the scope of a broader
-and more thorough statistical investigation.
+By explicitly solving the all-subsets regression
+problem~\eqref{eq:all_subsets} once and for all (Stage 1), the list of
+all $N$ submodels is made readily available for further exploration:
+evaluating multiple criterion functions (e.g., AIC and BIC), or
+conducting a more elaborate statistical inference, can be performed at
+a negligible cost (Stage 2).  Thus, it may be advisable to adopt a
+two-stage approach within the scope of a broader and more thorough
+statistical investigation.  On the other hand, the computational
+strategy can be optimized for a specific selection criterion when
+solving the best-subset selection problem~\eqref{eq:best_subset}
+directly, and the IC-based approach can lead to computational costs
+that are drastically improved.
 
 Brute-force (or exhaustive) search procedures that enumerate all
 possible subsets are often intractable even for a modest number of
@@ -246,24 +247,26 @@ solving a problem more quickly, but make no guarantees on the quality
 of the solution produced; genetic algorithms and simulated annealing
 count among the well-known heuristic algorithms.  The solution
 returned by an approximation algorithm, on the other hand, can be
-prroven to lie within well specified bounds of the optimum.
+proven to lie within well specified bounds of the optimum.
 
 Several packages that deal with variable subset selection are
 available on the {\R} platform.  Package \pkg{leaps}~\citep{leaps}
-implements exact, non-exhaustive algorithms for subset regression
-based on~\citet{miller:02}, extended to generalized linear models by
-package \pkg{bestglm}~\citep{bestglm}.  Package
-\pkg{BeSS}~\citep{BeSS} implements algorithms for logistic and Cox
-proportional hazard models, whereas package \pkg{subselect} proposes
-simulated annealing algorithms based on the work
-of~\citet{duarte_silva:j_multivariate_anal:01}.  Furthermore, genetic
-algorithms for generalized linear models have been implemented
-by~\citet[package \pkg{glmulti}]{calcagno:j_stat_softw:10}
-and~\citet[package \pkg{kofnGA}]{wolters:j_stat_softw:15}.  Non-exact
-algorithms for regularized estimation of parametric models with
-automatic variable selection performed by lasso or elastic net
-estimation for generalized linear models have been investigated
-by~\citet{friedman:j_stat_softw:10}.
+implements exact, exhaustive and non-exhaustive algorithms for subset
+selection in linear models~\citep{miller:02}; it has been extended to
+generalized linear models by package \pkg{bestglm}~\citep{bestglm}.
+An active set algorithm for solving the best subset selection problem
+in generalized linear models is proposed by package
+\pkg{BeSS}~\citep{BeSS}.  Package \pkg{subselect}~\citep{subselect}
+proposes simulated annealing and genetic algorithms that search for
+subsets of variables which are optimal under various criteria.
+Package \pkg{glmulti}~\citep{glmulti} provides IC-based automated
+model selection methods for generalized linear models in the form of
+exhaustive and genetic algorithms.  Package
+\pkg{kofnGA}~\citep{wolters:j_stat_softw:15} uses a genetic algorithm
+to choose a fixed-size subset under a user-supplied objective
+function.  Procedures for regularized estimation of generalized linear
+models with elastic-net penalties are implemented in package
+\pkg{glmnet}~\citep{friedman:j_stat_softw:10}.
 
 Here, the \pkg{lmSubsets} package~\citep{lmSubsets} for exact
 variable-subset regression is presented.  It offers methods for
@@ -277,9 +280,9 @@ regression~\citet{hofmann:j_comput_graph_stat:10}.  The package
 further proposes approximation methods that compute non-exact
 solutions very quickly while giving guarantees on the quality of the
 result.  The core of the package is written in {\CC}.  The package is
-available for the \proglang{R} system for statistical
-computing~\citep{R} from The Comprehensive \proglang{R} Archive
-Network at \url{https://CRAN.R-project.org/package=lmSubsets}.
+available for the {\R} system for statistical computing~\citep{R} from
+The Comprehensive {\R} Archive Network at
+\url{https://CRAN.R-project.org/package=lmSubsets}.
 
 Section~\ref{sec:comput} reviews the theoretical background and the
 underlying algorithms.  The package's {\R} interface is presented in
@@ -313,8 +316,8 @@ $(V,0)$ corresponds to the full model.  Child nodes are generated by
 dropping (deleting) a single variable:
 %
 \begin{equation*}
-  \drop(S,j)=(S\setminus\{s_j\},j-1)\text{,}
-  \quad j=k+1,\ldots,n-1\text{.}
+  \drop(S,j)=(S\setminus\{s_j\},j-1)\text{ ,}
+  \quad j=k+1,\ldots,n-1\text{ .}
 \end{equation*}
 %
 Numerically, this is equivalent to downdating an orthogonal matrix
@@ -376,7 +379,7 @@ the fundamental property that the RSS increases when variables are
 deleted from a regression model, that is:
 %
 \begin{align*}
-  S_1\subseteq S_2\Rightarrow\rss(S_1)\geq\rss(S_2)\text{.}
+  S_1\subseteq S_2\Rightarrow\rss(S_1)\geq\rss(S_2)\text{ .}
 \end{align*}
 %
 A cutting test is employed to determine which parts of the DCA tree
@@ -431,8 +434,8 @@ generated only if there exists at least one $i$ such that
 \begin{equation}
   \label{eq:abba}
   %
-  (1+\tau_i)\cdot(\rss(S) - \rss_{\text{full}})<(r_i-\rss_{\text{full}})\text{,}
-  \quad i=j,\ldots,n-1\text{,}
+  (1+\tau_i)\cdot(\rss(S) - \rss_{\text{full}})<(r_i-\rss_{\text{full}})\text{ ,}
+  \quad i=j,\ldots,n-1\text{ ,}
 \end{equation}
 %
 where $\rss_{\text{full}}=\rss(V)$ is the RSS of the full model.  The
@@ -462,7 +465,7 @@ generated if and only if
 \begin{equation}
   \label{eq:bba+}
   %
-  F(j,\rss(S))<r_f\text{,}
+  F(j,\rss(S))<r_f\text{ ,}
 \end{equation}
 %
 where $r_f$ is the single current-best solution.  This results in a
@@ -475,13 +478,13 @@ generated nodes.
 % section:  Implementation in R                                      %
 %--------------------------------------------------------------------%
 
-\section[Implementation in R]{Implementation in \proglang{R}}
+\section[Implementation in R]{Implementation in {\R}}
 \label{sec:R}
 
-The \proglang{R} package \pkg{lmSubsets} provides a library of methods
-for variable subset selection in linear regression.  Two {\SSS}
-classes are defined, namely \class{lmSubsets} and \class{lmSelect},
-that address all-subsets~\eqref{eq:all_subsets} and
+The {\R} package \pkg{lmSubsets} provides a library of methods for
+variable subset selection in linear regression.  Two {\SSS} classes
+are defined, namely \class{lmSubsets} and \class{lmSelect}, that
+address all-subsets~\eqref{eq:all_subsets} and
 best-subset~\eqref{eq:best_subset} selection, respectively.  The
 package offers {\R}'s standard formula interface: linear models can be
 specified by means of a symbolic formula, and possibly a data frame.
@@ -530,36 +533,35 @@ declares the dependent and independent variables, which are typically
 taken from a \code{data.frame} specified by the user.  For example,
 the call
 %
-\begin{Code}
-  lmSubsets(mortality ~ precipitation + temperature1 + temperature7 +
-    age + household + education + housing + population + noncauc +
-    whitecollar + income + hydrocarbon + nox + so2 + humidity,
-    data = AirPollution)
-\end{Code}
+\begin{CodeInput}
+  lmSubsets(mortality ~ precipitation + temperature1 + temperature7 + age +
+    household + education + housing + population + noncauc + whitecollar +
+    income + hydrocarbon + nox + so2 + humidity, data = AirPollution)
+\end{CodeInput}
 %
 specifies a response variable (\code{mortality}) and fifteen predictor
 variables, all taken from the \code{AirPollution}
 dataset~\citep{miller:02}.  It is common to shorten the call by
 employing {\R}'s practical \dquote{dot-notation}:
 %
-\begin{Code}[commandchars=\\\{\}]
-  lmSubsets(mortality ~ ., data = AirPollution)\textrm{,}
-\end{Code}
+\begin{CodeInput}[commandchars=\\\{\}]
+  lmSubsets(mortality ~ ., data = AirPollution)\textrm{ ,}
+\end{CodeInput}
 %
 where the dot (\code{.}) stands for \dquote{all variables not
   mentioned in the left-hand side of the formula}.  By default, an
 intercept term is included in the model; that is, the call in the
 previous example is equivalent to
 %
-\begin{Code}[commandchars=\\\{\}]
-  lmSubsets(mortality ~ . + 1, data = AirPollution)\textrm{.}
-\end{Code}
+\begin{CodeInput}[commandchars=\\\{\}]
+  lmSubsets(mortality ~ . + 1, data = AirPollution)\textrm{ .}
+\end{CodeInput}
 %
 To discard the intercept, the call may be rewritten as follows:
 %
-\begin{Code}[commandchars=\\\{\}]
-  lmSubsets(mortality ~ . - 1, data = AirPollution)\textrm{.}
-\end{Code}
+\begin{CodeInput}[commandchars=\\\{\}]
+  lmSubsets(mortality ~ . - 1, data = AirPollution)\textrm{ .}
+\end{CodeInput}
 %
 Submodels can be rejected based on the presence or absence of certain
 independent variables.  The parameter \code{include} specifies that
@@ -567,22 +569,22 @@ all submodels must contain one or several variables.  In the following
 example, only submodels containing the variable \code{noncauc} are
 retained:
 %
-\begin{Code}[commandchars=\\\{\}]
-  lmSubsets(mortality ~ ., include = "noncauc", data = AirPollution)\textrm{.}
-\end{Code}
+\begin{CodeInput}[commandchars=\\\{\}]
+  lmSubsets(mortality ~ ., include = "noncauc", data = AirPollution)\textrm{ .}
+\end{CodeInput}
 %
 Conversely, the \code{exclude} parameter can be employed to discard a
 specific set of variables, as in the following example:
 %
-\begin{Code}[commandchars=\\\{\}]
-  lmSubsets(mortality ~ ., exclude = "whitecollar", data = AirPollution)\textrm{.}
-\end{Code}
+\begin{CodeInput}[commandchars=\\\{\}]
+  lmSubsets(mortality ~ ., exclude = "whitecollar", data = AirPollution)\textrm{ .}
+\end{CodeInput}
 %
 The same effect can be achieved by rewriting the formula as follows:
 %
-\begin{Code}[commandchars=\\\{\}]
-  lmSubsets(mortality ~ . - whitecollar, data = AirPollution)\textrm{.}
-\end{Code}
+\begin{CodeInput}[commandchars=\\\{\}]
+  lmSubsets(mortality ~ . - whitecollar, data = AirPollution)\textrm{ .}
+\end{CodeInput}
 %
 The \code{include} and \code{exclude} parameters may be used in
 combination, and both may specify more than one variable
@@ -592,7 +594,7 @@ The criterion used for best-subset selection is evaluated following
 the expression
 %
 \begin{equation*}
-  -2\cdot\kode{logLik} + \kode{penalty}\cdot\kode{npar}\text{,}
+  -2\cdot\kode{logLik} + \kode{penalty}\cdot\kode{npar}\text{ ,}
 \end{equation*}
 %
 where \code{penalty} is the penalty per model parameter defined
@@ -608,23 +610,23 @@ information criterion~\citep[BIC,][]{schwarz:ann_stat:78}, where
 \texttt{nobs} is the number of observations.  For example, either one
 of
 %
-\begin{Code}
+\begin{CodeInput}
   lmSelect(mortality ~ ., data = AirPollution, penalty = 2)
-\end{Code}
+\end{CodeInput}
 %
 and
 %
-\begin{Code}
+\begin{CodeInput}
   lmSelect(mortality ~ ., data = AirPollution, penalty = "AIC")
-\end{Code}
+\end{CodeInput}
 %
 will select the best submodel according to the usual AIC; by default,
 \fct{lmSelect} employs the BIC.  The user may also specify a custom
 criterion function
 %
-\begin{Code}[commandchars=\\\{\}]
-  lmSelect(..., penalty = function (size, rss) ...)\textrm{,}
-\end{Code}
+\begin{CodeInput}[commandchars=\\\{\}]
+  lmSelect(..., penalty = function (size, rss) ...)\textrm{ ,}
+\end{CodeInput}
 %
 where \code{size} is the number of regressors, and \code{rss} the
 residual sum of squares of the corresponding submodel.  The
@@ -645,19 +647,19 @@ passing along a regressor matrix \code{x} and a response vector
 functions act as wrappers around the {\CC} library, and are declared
 as
 %
-\begin{Code}
+\begin{CodeInput}
   lmSubsets_fit(x, y, weights = NULL, offset = NULL, include = NULL,
-    exclude = NULL, nmin = NULL, nmax = NULL, tolerance = 0,
-    nbest = 1, ..., pradius = NULL)
-\end{Code}
+    exclude = NULL, nmin = NULL, nmax = NULL, tolerance = 0, nbest = 1, ...,
+    pradius = NULL)
+\end{CodeInput}
 %
 and
 %
-\begin{Code}[commandchars=\\\{\}]
+\begin{CodeInput}[commandchars=\\\{\}]
   lmSelect_fit(x, y, weights = NULL, offset = NULL, include = NULL,
-    exclude = NULL, penalty = "BIC", tolerance = 0,
-    nbest = 1, ..., pradius = NULL)\textrm{.}
-\end{Code}
+    exclude = NULL, penalty = "BIC", tolerance = 0, nbest = 1, ...,
+    pradius = NULL)\textrm{ .}
+\end{CodeInput}
 %
 The parameters are summarized in Table~\ref{tab:params}.
 
@@ -715,7 +717,7 @@ test~\eqref{eq:abba}.  The solution produced by the ABBA satisfies the
 following relationship:
 %
 \begin{equation*}
-  f(S)-f(V)\leq(1+\mathtt{tolerance})\cdot (f(S^*)-f(V))\mathrm{,}
+  f(S)-f(V)\leq(1+\mathtt{tolerance})\cdot (f(S^*)-f(V))\textrm{ ,}
 \end{equation*}
 %
 where $S$ is the returned solution, $V$ the full model, $S^*$ the
@@ -867,7 +869,7 @@ fluxes, among others.  See \code{?IbkTemperature} for more details.
 
 First, the dataset is loaded and the few missing values are omitted for
 simplicity.
-<<data>>=
+<<data-init>>=
 data("IbkTemperature", package = "lmSubsets")
 IbkTemperature <- na.omit(IbkTemperature)
 @
@@ -877,19 +879,19 @@ the 2-meter temperature NWP forecast (\code{t2m}), a linear trend
 component (\code{time}), as well as seasonal components with annual
 (\code{sin}, \code{cos}) and bi-annual (\code{sin2}, \code{cos2})
 harmonic patterns.
-<<mos0>>=
+<<mos0-def>>=
 MOS0 <- lm(temp ~ t2m + time + sin + cos + sin2 + cos2,
   data = IbkTemperature)
 @
 
-<<mos1, echo=FALSE>>=
+<<mos1-def, echo=FALSE>>=
 MOS1_best <- lmSelect(temp ~ ., data = IbkTemperature,
   include = c("t2m", "time", "sin", "cos", "sin2", "cos2"),
   penalty = "BIC", nbest = 20)
 MOS1 <- refit(MOS1_best)
 @
 
-<<mos2, echo=FALSE>>=
+<<mos2-def, echo=FALSE>>=
 MOS2_all <- lmSubsets(temp ~ ., data = IbkTemperature)
 MOS2 <- refit(lmSelect(MOS2_all, penalty = "BIC"))
 @
@@ -904,7 +906,7 @@ numerical model.
 \begin{table}[t!]
 \centering
 \small
-<<echo=FALSE>>=
+<<mos-stats, echo=FALSE>>=
 sum0 <- summary(MOS0)
 sum1 <- summary(MOS1)
 sum2 <- summary(MOS2)
@@ -998,17 +1000,16 @@ stat_tab <- formatC(stat_tab, format = "f", digits = 3)
 \toprule
 & \multicolumn{3}{@{}l}{MOS0} & \multicolumn{3}{@{}l}{MOS1} & \multicolumn{3}{@{}l}{MOS2} \\
 \midrule
-<<echo=FALSE, results=tex, strip.white=false>>=
+<<mos-stats-tex-coefs, echo=FALSE, results=tex, strip.white=false>>=
 for (nm in xnms) {
-    cat(nm,
-            " & ", coef_tab[nm, 1], " & ", sgnf_tab[nm, 1], " & ", stde_tab[nm, 1],
+    cat(nm, " & ", coef_tab[nm, 1], " & ", sgnf_tab[nm, 1], " & ", stde_tab[nm, 1],
             " & ", coef_tab[nm, 2], " & ", sgnf_tab[nm, 2], " & ", stde_tab[nm, 2],
             " & ", coef_tab[nm, 3], " & ", sgnf_tab[nm, 3], " & ", stde_tab[nm, 3],
         "\\\\", "\n", sep = "")
 }
 @ 
 \midrule
-<<echo=FALSE, results=tex, strip.white=false>>=
+<<mos-stats-tex, echo=FALSE, results=tex, strip.white=false>>=
 for (nm in rownames(stat_tab)) {
     cat(nm, " & ", stat_tab[nm, 1], " & ", " & ",
             " & ", stat_tab[nm, 2], " & ", " & ",
@@ -1026,8 +1027,8 @@ for (nm in rownames(stat_tab)) {
 
 Next, the reference model is extended with selected regressors taken
 from the remaining 35~NWP variables.
-<<>>=
-<<mos1>>
+<<mos1-echo>>=
+<<mos1-def>>
 @
 Best-subset regression is employed to determine pertinent veriables in
 addition to the regressors already found in \code{MOS0}.  The 20 best
@@ -1042,16 +1043,16 @@ The \class{lm} object for the best submodel is extracted
 \centering
 \begin{subfigure}[b]{\textwidth}
 \setkeys{Gin}{width=\textwidth}
-<<fig-image-mos1, fig=TRUE, echo=FALSE, width=12, height=6.5>>=
-image(MOS1_best, hilite = 1, lab_hilite = "bold(lab)",
-      pad_size = 2, pad_which = 2)
+<<mos1-best-image, fig=TRUE, echo=FALSE, width=12, height=6.5>>=
+image(MOS1_best, hilite = 1, lab_hilite = "bold(lab)", pad_size = 2,
+  pad_which = 2)
 @
 \caption{\code{MOS1\_best}}
 \label{fig:image:mos1}
 \end{subfigure}
 \begin{subfigure}[b]{\textwidth}
 \setkeys{Gin}{width=\textwidth}
-<<fig-image-mos2, fig=TRUE, echo=FALSE, width=12, height=6.5>>=
+<<mos2-all-image, fig=TRUE, echo=FALSE, width=12, height=6.5>>=
 image(MOS2_all, size = 8:27, hilite = 1, hilite_penalty = "BIC",
       lab_hilite = "bold(lab)", pad_size = 2, pad_which = 2)
 @
@@ -1066,7 +1067,7 @@ image(MOS2_all, size = 8:27, hilite = 1, hilite_penalty = "BIC",
 \centering
 \begin{subfigure}[b]{0.5\textwidth}
 \setkeys{Gin}{width=\textwidth}
-<<fig-plot-mos1, fig=TRUE, echo=FALSE>>=
+<<mos1-best-plot, fig=TRUE, echo=FALSE>>=
 plot(MOS1_best)
 @
 \caption{\code{MOS1\_best}}
@@ -1074,7 +1075,7 @@ plot(MOS1_best)
 \end{subfigure}%
 \begin{subfigure}[b]{0.5\textwidth}
 \setkeys{Gin}{width=\textwidth}
-<<fig-plot-mos2, fig=TRUE, echo=FALSE>>=
+<<mos2-all-plot, fig=TRUE, echo=FALSE>>=
 plot(MOS2_all, ylim_ic = c(9000, 9700))
 @
 \caption{\code{MOS2\_all}}
@@ -1086,8 +1087,8 @@ plot(MOS2_all, ylim_ic = c(9000, 9700))
 
 Finally, an all-subsets regression is conducted on all 41 variables
 without any restrictions.
-<<>>=
-<<mos2>>
+<<mos2-echo>>=
+<<mos2-def>>
 @
 The results are illustrated in Figures~\ref{fig:image:mos2}
 and~\ref{fig:plot:mos2}.  Here, all-subsets regression is employed --
@@ -1147,8 +1148,8 @@ of \code{ntrue} randomly selected independent variables, a noise
 vector \code{e}, and the intercept:
 %
 \begin{equation*}
-  \kode{y}=\kode{X}\cdot\mathbbm{1}_\text{true}+\kode{e}+1\text{,}
-  \quad\kode{e}\sim(0,\kode{sigma}^2)\text{,}
+  \kode{y}=\kode{X}\cdot\mathbbm{1}_\text{true}+\kode{e}+1\text{ ,}
+  \quad\kode{e}\sim(0,\kode{sigma}^2)\text{ ,}
 \end{equation*}
 %
 were \kode{X} is a $\kode{nobs}\times\kode{nvar}$ matrix of random
@@ -1186,12 +1187,12 @@ Table~\ref{tab:bm2}.
   \begin{tabular}{rr|RR|RRR}
     \toprule
     sigma & nvar & leaps & leaps1 & lmSubsets & (speedup) & (speedup1) \\
-<<echo=FALSE, results=tex, strip.white=false>>=
+<<bm-01, echo=FALSE, results=tex, strip.white=false>>=
 source("bm-01.R")
 
 df <- report_benchmark()
 
-junk <- lapply(split(df, with(df, SD)), function (grp) {
+goop <- lapply(split(df, with(df, SD)), function (grp) {
     sd <- grp[1, "SD"]
 
     grp <- with(grp, {
@@ -1230,13 +1231,13 @@ junk <- lapply(split(df, with(df, SD)), function (grp) {
   \begin{tabular}{rr|RR|RRR}
     \toprule
     sigma & nvar & bestglm & bestglm1 & lmSelect & (speedup) & (speedup1) \\
-<<echo=FALSE, results=tex, strip.white=false>>=
+<<bm-02, echo=FALSE, results=tex, strip.white=false>>=
 source("bm-02.R")
 
 df <- report_benchmark()
 df <- subset(df, IC == "BIC")
 
-junk <- lapply(split(df, with(df, SD)), function (grp) {
+goop <- lapply(split(df, with(df, SD)), function (grp) {
     sd <- grp[1, "SD"]
 
     grp <- with(grp, {
@@ -1304,12 +1305,12 @@ not apply to \fct{lmSelect}.
     \multicolumn{3}{c}{tolerance = 0.1} \\
     sigma & nvar & nmin & nmax & lmSubsets & lmSelect & (speedup) &
     lmSubsets & lmSelect & (speedup) \\
-<<echo=FALSE, results=tex, strip.white=false>>=
+<<bm-03, echo=FALSE, results=tex, strip.white=false>>=
 source("bm-03.R")
 
 df <- report_benchmark()
 
-junk <- lapply(split(df, with(df, SD)), function (grp) {
+goop <- lapply(split(df, with(df, SD)), function (grp) {
     sd <- grp[1, "SD"]
 
     grp <- do.call(rbind, lapply(split(grp, with(grp, NVAR)), function (grp) {
@@ -1391,7 +1392,7 @@ is close to the BIC.
     \toprule
     & & \multicolumn{5}{c}{nbest} \\
     nvar & ic & 1 & 5 & 10 & 15 & 20 \\
-<<echo=FALSE, results=tex, strip.white=false>>=
+<<bm-04, echo=FALSE, results=tex, strip.white=false>>=
 source("bm-04.R")
 
 df <- report_benchmark()
@@ -1411,7 +1412,7 @@ df <- {
     x
 }
 
-junk <- lapply(split(df, with(df, NVAR)), function (grp) {
+goop <- lapply(split(df, with(df, NVAR)), function (grp) {
     nvar <- grp[1, "NVAR"]
 
     grp <- cbind(NVAR = "", as.character(grp[, 2]),
@@ -1442,7 +1443,7 @@ junk <- lapply(split(df, with(df, NVAR)), function (grp) {
     \toprule
     & \multicolumn{6}{c}{penalty} \\
     nvar & 1.0 & 2.0 & 4.0 & 8.0 & 16.0 & 32.0 \\
-<<echo=FALSE, results=tex, strip.white=false>>=
+<<bm-05, echo=FALSE, results=tex, strip.white=false>>=
 source("bm-05.R")
 
 df <- report_benchmark()
@@ -1481,6 +1482,87 @@ for (row in grp) {
 \end{table}
 
 
+\subsection{Shrinkage methods}
+
+The LASSO~\citep{tibshirani:j_roy_stat_soc_b_met:96} provides an
+alternative to exact model selection methods, with an emphasis on
+regularization.  The function \fct{glmnet}~\citep{glmnet} computes an
+entire regularization path and returns a sequence of sparse
+estimators.  It is not IC-based; rather, it employs a modified
+objective function that induces sparsity by penalizing the regression
+coefficients, and is extremely efficient.
+
+The return value of \fct{glmnet} can be post-processed for comparison
+with \fct{lmSelect}.  For each (sparse) estimator contained in the
+sequence returned by \fct{glmnet}, the subset model corresponding to
+the variables with non-zero coefficients is identified; the submodel
+is fitted (in the OLS sense), and the BIC extracted.  The list of
+submodels thus obtained is sorted in order of increasing BIC, after
+removing duplicate models.
+
+Comparative results are illustrated in Table~\ref{tab:bmlasso}.  For
+each data configuration, five datasets are simulated.  Average
+execution times of \fct{lmSelect} and \fct{glmnet} are reported, as
+well as the average number of matches -- i.e., the number of best
+subsets correctly identified -- and the speedup of the LASSO.  If the
+first two best models are found but not the third, then \code{(nbest)}
+is $2$; if the second is not found either, then \code{(nbest)} is $1$;
+the average value then is $1.5$.
+
+The takeaway it that the LASSO is computationally very efficient; it
+is much less affected by the dimension of the problem than
+\fct{lmSelect}.  On the other hand, while \fct{lmSelect} always finds
+the global optimum -- or a solution with provable error bounds when a
+tolerance is employed --, \fct{glmnet} does not provide any guarantees
+on the distance of the result from the optimal solution (in the OLS
+sense).
+
+
+\begin{table}
+  \centering\scriptsize
+  \texttt{%
+  \settowidth{\Rwidth}{123.456}
+  \begin{tabular}{rr|RRRR}
+    \toprule
+    sigma & nvar & lmSelect & glmnet & (speedup) & (nbest) \\
+<<bm-lasso, echo=FALSE, results=tex, strip.white=false>>=
+source("bm-lasso.R")
+
+df <- report_benchmark()
+
+goop <- lapply(split(df, with(df, SD)), function (grp) {
+    sd <- grp[1, "SD"]
+
+    grp <- do.call(rbind, lapply(split(grp, with(grp, NVAR)), function (grp) {
+        nvar <- grp[1, "NVAR"]
+
+        with(grp, c(nvar, LMSELECT, LASSO, LMSELECT / LASSO, HITS))
+    }))
+
+    grp <- cbind(SD = "", formatC(grp[, 1], format = "d"),
+                 formatC(grp[, 2:3], format = "f", digits = 3),
+                 formatC(grp[, 4], format = "f", digits = 1),
+                 formatC(grp[, 5], format = "f", digits = 1))
+    grp[1, "SD"] <- formatC(sd, format = "f", digits = 2)
+
+    grp <- apply(grp, 1, paste0, collapse = " & ")
+
+    cat("\\midrule\n")
+    for (row in grp) {
+        cat(row)
+        cat("\\\\\n")
+    }
+})
+@ 
+    \bottomrule
+  \end{tabular}}
+  \caption{Average execution times (in seconds) of \fct{lmSelect} and
+    \fct{glmnet}, as well as the speedup and the average number of
+    hits scored by the lasso.}
+  \label{tab:bmlasso}
+\end{table}
+
+
 %--------------------------------------------------------------------%
 % section:  Conclusions                                              %
 %--------------------------------------------------------------------%
@@ -1507,13 +1589,12 @@ configurations of simulated datasets.
 
 \section*{Acknowledgments}
 
-\TODO{Oviedo project, IFMSE}
-
-This work was in part supported by the CRoNoS COST Action (IC1408),
-the \emph{F\"orderverein des wirtschaftswissenschaftlichen Zentrums
-  der Universit\"at Basel} through research project B-123, and the
-IFMSE.  The authors are grateful to Jakob Messner for sharing the GEFS
-forecast data in \code{IbkTemperature}.
+This work was in part supported by the CRoNoS COST Action (IC1408);
+GRUPIN14-005 (Principality of Asturias, Spain); and the
+\emph{F\"orderverein des wirtschaftswissenschaftlichen Zentrums der
+  Universit\"at Basel} through research project B-123.  The authors
+are grateful to Jakob Messner for sharing the GEFS forecast data in
+\code{IbkTemperature}.
 
 The authors would particularly like to thank Prof.~Manfred Gilli for
 his continued support and encouragements throughout the years.
