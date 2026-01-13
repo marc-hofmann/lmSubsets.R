@@ -1,0 +1,3 @@
+CXX_STD = CXX14
+PKG_CPPFLAGS = -Iinclude
+PKG_LIBS = $(objects) $(BLAS_LIBS) $(LAPACK_LIBS) $(FLIBS)

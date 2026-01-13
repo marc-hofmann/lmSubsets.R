@@ -1,0 +1,65 @@
+
+
+local({
+    title <- paste0("{", meta$Package, "}: ", meta$Title)
+
+    authors <- eval(parse(text = meta[["Authors@R"]]))
+    authors <- authors[sapply(authors, function (pers) "aut" %in% pers$role)]
+
+    mheader <- "To cite package 'lmSubsets' in publications use:"
+
+    biblio <- c(
+        bibentry(
+            bibtype = "Manual",
+            title   = title,
+            author  = authors,
+            year    = format(as.Date(meta$Date), "%Y"),
+            note    = paste0("R package version ", meta$Version),
+            url     = "https://CRAN.R-project.org/package=lmSubsets"
+        ),
+
+        bibentry(
+            bibtype = "Article",
+            title   = paste0(title, " for R"),
+            author  = c(
+                "Marc Hofmann", "Cristian Gatu", "Erricos J. Kontoghiorghes",
+                "Ana Colubi", "Achim Zeileis"
+            ),
+            journal = "Journal of Statistical Software",
+            year    = "2018",
+            note    = "Submitted"
+        ),
+
+        bibentry(
+            bibtype = "Article",
+            title   = paste(
+                "Efficient algorithms for computing the best subset",
+                "regression models for large-scale problems"
+            ),
+            author  = c(
+                "Marc Hofmann", "Cristian Gatu", "Erricos J. Kontoghiorghes"
+            ),
+            journal = "Computational Statistics & Data Analysis",
+            year    = "2007",
+            volume  = "52",
+            pages   = "16-29",
+            doi     = "10.1016/j.csda.2007.03.017"
+        ),
+
+        bibentry(
+            bibtype = "Article",
+            title   = paste(
+                "Branch-and-bound algorithms for computing",
+                "the best subset regression models"
+            ),
+            author  = c("Cristian Gatu", "Erricos J. Kontoghiorghes"),
+            journal = "Journal of Computational and Graphical Statistics",
+            year    = "2006",
+            volume  = "15",
+            pages   = "139-156",
+            doi     = "10.1198/106186006x100290"
+        )
+    )
+
+    structure(biblio, mheader = mheader)
+})
