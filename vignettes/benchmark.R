@@ -2,8 +2,6 @@ library("parallel")
 library("tools")
 
 library("lmSubsets")
-library("leaps")
-library("bestglm")
 
 
 
@@ -675,6 +673,8 @@ exec_lmSelect_benchmark <- function (bm, case_id, rep = 1) {
 ##   benchmark
 ##
 exec_leaps_benchmark <- function (bm, case_id, rep = 1) {
+    require("leaps")
+
     if (missing(case_id)) {
         stop ("missing argument 'case_id'")
     }
@@ -752,6 +752,8 @@ exec_leaps_benchmark <- function (bm, case_id, rep = 1) {
 ##   benchmark
 ##
 exec_bestglm_benchmark <- function (bm, case_id, rep = 1) {
+    require("bestglm")
+
     if (missing(case_id)) {
         stop ("missing argument 'case_id'")
     }

@@ -1,9 +1,10 @@
-library(lmSubsets)
-library(glmnet)
+library("lmSubsets")
 
 
 ## run lasso
 lasso <- function (x, y) {
+    require("glmnet")
+
     ans <- glmnet(x = x, y = y, family = "gaussian", alpha = 1)
     ans$x <- x
     ans$y <- y

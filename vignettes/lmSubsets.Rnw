@@ -87,7 +87,7 @@
 \Plaintitle{lmSubsets: Exact Variable-Subset Selection in Linear Regression for R}
 
 \Abstract{%
-  An {\R} package for computing the all-subsets regression problem is
+  An {\R}~package for computing the all-subsets regression problem is
   presented.  The proposed algorithms are based on computational
   strategies recently developed.  A novel algorithm for the
   best-subset regression problem selects subset models based on a
@@ -97,6 +97,9 @@
   the underlying numerical computations.  A case study and benchmark
   results illustrate the usage and the computational efficiency of the
   package.
+
+  Originally published in the Journal of Statistical
+  Software~\citep{hofmann:19}.
 }
 
 \Keywords{linear regression, model selection, variable selection, best-subset regression, {\R}}
@@ -133,12 +136,12 @@ data("AirPollution", package = "lmSubsets")
 
 An important problem in statistical modeling is that of subset
 selection regression or, equivalently, of finding the best regression
-equation~\citep{clarke:j_roy_stat_soc_c_app:81,hastie:01}.  Given a
-set of possible variables to be included in the regression, the
-problem consists in selecting a subset that optimizes some statistical
-criterion.  The evaluation of the criterion function typically
-involves the estimation of the corresponding
-submodel~\citep{miller:02}.  Consider the standard regression model
+equation~\citep{clarke:81,hastie:01}.  Given a set of possible
+variables to be included in the regression, the problem consists in
+selecting a subset that optimizes some statistical criterion.  The
+evaluation of the criterion function typically involves the estimation
+of the corresponding submodel~\citep{miller:02}.  Consider the
+standard regression model
 %
 \begin{equation}
   \label{eq:olm}
@@ -166,7 +169,7 @@ vector.  The regression coefficients $\beta$ do not need to be
 explicitly computed in order to determine the RSS, which can be
 obtained through numerically stable orthogonal matrix decomposition
 methods~\citep{golub:96}.
-  
+
 Let $V=\{1,\ldots,N\}$ denote the set of all independent variables.  A
 subset model (or submodel) is denoted by $S$, $S\subseteq V$.  Given a
 criterion function $f$, the best-subset selection problem consists in
@@ -261,7 +264,7 @@ approximation algorithm, on the other hand, can be proven to lie
 within well specified bounds of the optimum.
 
 Several packages that deal with variable subset selection are
-available on the {\R} platform.  Package \pkg{leaps}~\citep{leaps}
+available on the {\R}~platform.  Package \pkg{leaps}~\citep{leaps}
 implements exact, exhaustive and non-exhaustive algorithms for subset
 selection in linear models~\citep{miller:02}; it has been extended to
 generalized linear models by package \pkg{bestglm}~\citep{bestglm}.
@@ -273,31 +276,30 @@ subsets of variables which are optimal under various criteria.
 Package \pkg{glmulti}~\citep{glmulti} provides IC-based automated
 model selection methods for generalized linear models in the form of
 exhaustive and genetic algorithms.  Package
-\pkg{kofnGA}~\citep{wolters:j_stat_softw:15} uses a genetic algorithm
-to choose a fixed-size subset under a user-supplied objective
-function.  Procedures for regularized estimation of generalized linear
-models with elastic-net penalties are implemented in package
-\pkg{glmnet}~\citep{friedman:j_stat_softw:10}.
+\pkg{kofnGA}~\citep{wolters:15} uses a genetic algorithm to choose a
+fixed-size subset under a user-supplied objective function.
+Procedures for regularized estimation of generalized linear models
+with elastic-net penalties are implemented in package
+\pkg{glmnet}~\citep{friedman:10}.
 
 Here, the \pkg{lmSubsets} package~\citep{lmSubsets} for exact
 variable-subset regression is presented.  It offers methods for
 solving both the best-subset~\eqref{eq:best_subset} and the
 all-subsets~\eqref{eq:all_subsets} selection problems.  It implements
-the algorithms presented by~\citet{gatu:j_comput_graph_stat:06}
-and~\citet{hofmann:comput_stat_data_an:07}.  A branch-and-bound
-strategy is employed to reduce the size of the search space.  A
-similar approach has been employed for exact least-trimmed-squares
-regression~\citet{hofmann:j_comput_graph_stat:10}.  The package
+the algorithms presented by~\citet{gatu:06} and~\citet{hofmann:07}.  A
+branch-and-bound strategy is employed to reduce the size of the search
+space.  A similar approach has been employed for exact
+least-trimmed-squares regression~\citet{hofmann:10}.  The package
 further proposes approximation methods that compute non-exact
 solutions very quickly: the exigencies toward solution quality are
 relaxed by means of a tolerance parameter that steers the permitted
 degree of error.  The core of the package is written in {\CXX}.  The
-package is available for the {\R} system for statistical
-computing~\citep{R} from The Comprehensive {\R} Archive Network at
+package is available for the {\R}~system for statistical
+computing~\citep{R} from the Comprehensive {\R}~Archive Network at
 \url{https://CRAN.R-project.org/package=lmSubsets}.
 
 Section~\ref{sec:comput} reviews the theoretical background and the
-underlying algorithms.  The package's {\R} interface is presented in
+underlying algorithms.  The package's {\R}~interface is presented in
 Section~\ref{sec:R}.  A usage example is given in
 Section~\ref{sec:usecase}, while benchmark results are illustrated in
 Section~\ref{sec:benchmarks}.
@@ -316,8 +318,7 @@ dropping column algorithm (DCA) was devised as a straight-forward
 approach to solve the all-subsets selection
 problem~\eqref{eq:all_subsets}.  The DCA evaluates all possible
 variable subsets by traversing a regression tree consisting of
-$2^{(N-1)}$
-nodes~\citep{gatu:parallel_comput:03,gatu:comput_stat_data_an:07,smith:comput_stat_data_an:89}.
+$2^{(N-1)}$ nodes~\citep{gatu:03,gatu:07,smith:89}.
 
 Each node of the regression tree can be represented by a pair $(S,k)$,
 where $S=\{s_1,\ldots,s_n\}$ corresponds to a subset of $n$ variables,
@@ -335,14 +336,13 @@ dropping (deleting) a single variable:
 %
 Numerically, this is equivalent to downdating an orthogonal matrix
 decomposition after a column has been
-deleted~\citep{golub:96,kontoghiorghes:00,smith:comput_stat_data_an:89}.
-Givens rotations are employed to efficiently move from one node to
-another.  The DCA maintains a subset table $r$ with $N$ entries, where
-entry $r_n$ contains the RSS of the current-best submodel of size
-$n$~\citep{gatu:j_comput_graph_stat:06,hofmann:comput_stat_data_an:07}.
-Figure~\ref{fig:dca_tree} illustrates a regression tree for $N=5$
-variables.  The index $k$ is symbolized by a bullet ($\bullet$).  The
-subleading models are listed in each node.
+deleted~\citep{golub:96,kontoghiorghes:00,smith:89}.  Givens rotations
+are employed to efficiently move from one node to another.  The DCA
+maintains a subset table $r$ with $N$ entries, where entry $r_n$
+contains the RSS of the current-best submodel of size
+$n$~\citep{gatu:06,hofmann:07}.  Figure~\ref{fig:dca_tree} illustrates
+a regression tree for $N=5$ variables.  The index $k$ is symbolized by
+a bullet ($\bullet$).  The subleading models are listed in each node.
 
 \begin{figure}[t!]
   \def\node#1#2{\TR{\psframebox[framearc=0.5]{\sffamily${\text{#1}\atop\text{#2}}$}}}
@@ -393,13 +393,13 @@ are redundant: A new node $\drop(S,j)$ is generated only if
 $\rss(S)<r_j$ ($j=k+1,\ldots,n-1$).  The quantity $\rss(S)$ is called
 the bound of the subtree rooted in $(S,k)$: no subset model extracted
 from the subtree can have a smaller
-RSS~\citep{gatu:j_comput_graph_stat:06}.  Note that the BBA is an
+RSS~\citep{gatu:06}.  Note that the BBA is an
 exact algorithm, i.e., it computes the optimal solution of the
 all-subsets regression problem~\eqref{eq:all_subsets}.
 
 To further reduce the computational cost, the all-subsets regression
 problem can be restricted to a range of submodel
-sizes~\citep{hofmann:comput_stat_data_an:07}.  In this case, the
+sizes~\citep{hofmann:07}.  In this case, the
 problem~\eqref{eq:all_subsets} is reformulated as
 %
 \begin{equation}
@@ -419,17 +419,15 @@ The size of subtrees rooted in the same level decreases exponentially
 from left to right.  In order to encourage the pruning of large
 subtrees by the BBA cutting test, the variables in a given node can be
 ordered such that a child node will always have a larger RSS (i.e.,
-bound) than its right siblings~\citep{gatu:j_comput_graph_stat:06}.
-This strategy can be applied in nodes of arbitrary depth.  However,
-computing the variable bounds incurs a computational overhead.  Thus,
-it is not advisable to indiscriminately preorder variables.  A
-parameter---the preordering radius $p$---has been introduced to
-control the degree of
-preordering~\citep{hofmann:comput_stat_data_an:07}.  It accepts a
-value between $p=0$ (no preordering) and $p=N$ (preordering in all
-nodes); when $p=1$, preordering is performed in the root node only.
-Typically, $p=\lfloor N/3\rfloor$ produces better results in terms of
-execution time.
+bound) than its right siblings~\citep{gatu:06}.  This strategy can be
+applied in nodes of arbitrary depth.  However, computing the variable
+bounds incurs a computational overhead.  Thus, it is not advisable to
+indiscriminately preorder variables.  A parameter---the preordering
+radius $p$---has been introduced to control the degree of
+preordering~\citep{hofmann:07}.  It accepts a value between $p=0$ (no
+preordering) and $p=N$ (preordering in all nodes); when $p=1$,
+preordering is performed in the root node only.  Typically, $p=\lfloor
+N/3\rfloor$ produces better results in terms of execution time.
 
 The computational efficiency of the BBA is improved by allowing the
 algorithm to prune non-redundant branches of the regression tree.  The
@@ -451,9 +449,8 @@ value of $\tau_n$, the more aggressively the regression tree will be
 pruned, thus decreasing the computational load.  The advantage of the
 ABBA over heuristic algorithms is that the relative error of the
 solution is bounded by the tolerance
-parameter~\citep{gatu:j_comput_graph_stat:06,hofmann:comput_stat_data_an:07},
-thus giving the user control over the tradeoff between solution
-quality and speed of execution.
+parameter~\citep{gatu:06,hofmann:07}, thus giving the user control
+over the tradeoff between solution quality and speed of execution.
 
 The DCA and its derivatives report the $N$ subset models with the
 lowest RSS, one for each subset size.  The user can then analyze the
@@ -487,7 +484,7 @@ nodes.
 \section[Implementation in R]{Implementation in {\R}}
 \label{sec:R}
 
-The {\R} package \pkg{lmSubsets} provides a library of methods for
+The {\R}~package \pkg{lmSubsets} provides a library of methods for
 variable subset selection in linear regression.  Two {\SSS} classes
 are defined, namely \class{lmSubsets} and \class{lmSelect}, that
 address all-subsets~\eqref{eq:all_subsets} and
@@ -506,18 +503,18 @@ package structure is given in Table~\ref{tab:structure}.
   \centering
   \begin{tabular}{lll}
     \toprule
-    {\SSS} class           & Methods and functions    & Description                              \\
+    {\SSS} class      & Methods and functions    & Description                              \\
     \midrule
-    \class{lmSubsets}      & \fct{lmSubsets}          & all-subsets selection (generic function) \\
-                           & \fct{lmSubsets.matrix}   & matrix interface                         \\
-                           & \fct{lmSubsets.default}  & standard formula interface               \\
-                           & \fct{lmSubsets\_fit}     & low-level matrix interface               \\
+    \class{lmSubsets} & \fct{lmSubsets}          & all-subsets selection (generic function) \\
+                      & \fct{lmSubsets.matrix}   & matrix interface                         \\
+                      & \fct{lmSubsets.default}  & standard formula interface               \\
+                      & \fct{lmSubsets\_fit}     & low-level matrix interface               \\
     \midrule
-    \class{lmSelect}       & \fct{lmSelect}           & best-subset selection (generic function) \\
-                           & \fct{lmSelect.lmSubsets} & conversion method                        \\
-                           & \fct{lmSelect.matrix}    & matrix interface                         \\
-                           & \fct{lmSelect.default}   & standard formula interface               \\
-                           & \fct{lmSelect\_fit}      & low-level matrix interface               \\
+    \class{lmSelect}  & \fct{lmSelect}           & best-subset selection (generic function) \\
+                      & \fct{lmSelect.lmSubsets} & conversion method                        \\
+                      & \fct{lmSelect.matrix}    & matrix interface                         \\
+                      & \fct{lmSelect.default}   & standard formula interface               \\
+                      & \fct{lmSelect\_fit}      & low-level matrix interface               \\
     \bottomrule
   \end{tabular}
   \caption{Package structure.}
@@ -610,10 +607,10 @@ error variance).  The \code{penalty} value indicates how strongly
 model parameters are penalized, with large values favoring
 parsimonious models.  When $\code{penalty}=2$, the criterion
 corresponds to Akaike's information
-criterion~\citep[AIC,][]{akaike:ieee_t_automat_contr:74}; when
+criterion~\citep[AIC,][]{akaike:74}; when
 $\code{penalty}=\log(\code{nobs})$, to Schwarz's Bayesian information
-criterion~\citep[BIC,][]{schwarz:ann_stat:78}, where \code{nobs} is
-the number of observations.  For example, either one of
+criterion~\citep[BIC,][]{schwarz:78}, where \code{nobs} is the number
+of observations.  For example, either one of
 %
 \begin{CodeInput}
   lmSelect(mortality ~ ., data = AirPollution, penalty = 2)
@@ -683,9 +680,9 @@ The parameters are summarized in Table~\ref{tab:params}.
     \code{nmin}      & min.~number of regressors & \code{integer[1]}         & \fct{lmSubsets} only \\
     \code{nmax}      & max.~number of regressors & \code{integer[1]}         & \fct{lmSubsets} only \\
     \code{penalty}   & penalty per parameter     & \code{double[1]}          & \fct{lmSelect} only  \\
-                     & or criterion function     & \code{function[1]}        &  		    \\
+                     & or criterion function     & \code{function[1]}        &                      \\
     \code{tolerance} & ABBA tolerance parameter  & \code{double[nvar]}       & \fct{lmSubsets}      \\
-                     &                           & \code{double[1]}          & \fct{lmSelect}	    \\
+                     &                           & \code{double[1]}          & \fct{lmSelect}       \\
     \code{nbest}     & number of best subsets    & \code{integer[1]}                                \\
     \code{pradius}   & preordering radius        & \code{integer[1]}                                \\
     \bottomrule
@@ -763,13 +760,13 @@ the result objects.
   \begin{tabular}{lll}
     \toprule
     Component        & Description            & Canonical representation \\
-    \midrule        
+    \midrule
     \code{nobs}      & number of observations & \code{integer[1]}        \\
     \code{nvar}      & number of regressors   & \code{integer[1]}        \\
     \code{intercept} & intercept flag         & \code{logical[1]}        \\
     \code{include}   & regressors forced in   & \code{logical[nvar]}     \\
     \code{exclude}   & regressors forced out  & \code{logical[nvar]}     \\
-    \code{size}      & covered subset sizes   & \code{integer[]}          \\
+    \code{size}      & covered subset sizes   & \code{integer[]}         \\
     \code{tolerance} & tolerances used        & \code{double[nvar]}      \\
     \code{nbest}     & number of best subsets & \code{integer[1]}        \\
     \code{submodel}  & submodel information   & \code{data.frame}        \\
@@ -846,29 +843,29 @@ object is handed back.
 
 Advances in numerical weather prediction (NWP) have played an
 important role in the increase of weather forecast skill over the past
-decades~\citep{bauer:nature:15}.  Numerical models simulate physical
-systems that operate at a large, typically global, scale.  The
-horizontal (spatial) resolution is limited by the computational power
-available today. Starting from \cite{glahn:j_appl_meteorol:72}
-the NWP outputs are post-processed to correct for local and unresolved
-effects in order to obtain forecasts for specific locations
-\citep[see][Chapter~7, for an overview]{wilks:11}. So-called model
-output statistics (MOS) develops a regression relationship based
-on past meteorological observations of the variable to be predicted
-and forecasted NWP quantities at a certain lead time. Variable-subset
-selection is often employed to determine which NWP outputs should be
-included in the regression model for a specific location.
+decades~\citep{bauer:15}.  Numerical models simulate physical systems
+that operate at a large, typically global, scale.  The horizontal
+(spatial) resolution is limited by the computational power available
+today. Starting from \cite{glahn:72} the NWP outputs are
+post-processed to correct for local and unresolved effects in order to
+obtain forecasts for specific locations \citep[see][Chapter~7, for an
+  overview]{wilks:11}. So-called model output statistics (MOS)
+develops a regression relationship based on past meteorological
+observations of the variable to be predicted and forecasted NWP
+quantities at a certain lead time. Variable-subset selection is often
+employed to determine which NWP outputs should be included in the
+regression model for a specific location.
 
 In the following, package \pkg{lmSubsets} is used to build a MOS
 regression model predicting temperature at Innsbruck Airport, Austria,
 based on data from the Global Ensemble Forecast
-System~\citep{hamill:b_am_meteorol_soc:13}.  The data frame
-\code{IbkTemperature} contains 1824 daily cases for 42 variables: the
-temperature at Innsbruck Airport (observed), 36 NWP outputs
-(forecasted), and 5 deterministic time trend/season patterns.  The NWP
-variables include quantities pertaining to temperature (e.g., 2-meter
-above ground, minimum, maximum, soil), precipitation, wind, and
-fluxes, among others.  See \code{?IbkTemperature} for more details.
+System~\citep{hamill:13}.  The data frame \code{IbkTemperature}
+contains 1824 daily cases for 42 variables: the temperature at
+Innsbruck Airport (observed), 36 NWP outputs (forecasted), and 5
+deterministic time trend/season patterns.  The NWP variables include
+quantities pertaining to temperature (e.g., 2-meter above ground,
+minimum, maximum, soil), precipitation, wind, and fluxes, among
+others.  See \code{?IbkTemperature} for more details.
 
 First, the dataset is loaded and the few missing values are omitted for
 simplicity.
@@ -1014,7 +1011,7 @@ for (nm in xnms) {
             " & ", coef_tab[nm, 3], " & ", sgnf_tab[nm, 3], " & ", stde_tab[nm, 3],
         "\\\\", "\n", sep = "")
 }
-@ 
+@
 \midrule
 <<mos-stats-tex, echo=FALSE, results=tex, strip.white=false>>=
 for (nm in rownames(stat_tab)) {
@@ -1023,7 +1020,7 @@ for (nm in rownames(stat_tab)) {
             " & ", stat_tab[nm, 3], " & ", " & ",
         "\\\\", "\n")
 }
-@ 
+@
 \bottomrule
 \end{tabular}
 \caption{Estimated regression coefficients (along with standard
@@ -1130,8 +1127,7 @@ assessments.  Recently, there has been increasing interest in MOS
 models beyond least-squares linear regression, e.g., to take into
 account the effects of heteroscedasticity, censoring, and truncation.
 In this context, other selection techniques---such as
-boosting~\citep{messner:r_j:16,messner:mon_weather_rev:17}---can be
-considered.
+boosting~\citep{messner:16,messner:17}---can be considered.
 
 
 
@@ -1182,14 +1178,14 @@ all cases, \code{nobs} = 1000 and $\code{ntrue} =
 datasets are generated, giving rise to five runs per method over which
 average execution times are determined.  The performance of
 \fct{regsubsets} can be improved by \qq{manually} preordering the
-dataset in advance~\citep{hofmann:comput_stat_data_an:07}.  The
-average running times are summarized in Table~\ref{tab:bm1}, along
-with the relative performance (speedup) of \fct{lmSubsets}.  The same
-setup is used in Benchmark~2, where methods for best-subset selection
-are compared, namely \fct{bestglm} and \fct{lmSelect}.  As in the
-previous benchmark, average execution times are determined for
-\fct{bestglm} with and without preordering.  The results are
-illustrated in Table~\ref{tab:bm2}.
+dataset in advance~\citep{hofmann:07}.  The average running times are
+summarized in Table~\ref{tab:bm1}, along with the relative performance
+(speedup) of \fct{lmSubsets}.  The same setup is used in Benchmark~2,
+where methods for best-subset selection are compared, namely
+\fct{bestglm} and \fct{lmSelect}.  As in the previous benchmark,
+average execution times are determined for \fct{bestglm} with and
+without preordering.  The results are illustrated in
+Table~\ref{tab:bm2}.
 
 \begin{table}[t!]
   \centering\scriptsize
@@ -1285,7 +1281,7 @@ goop <- lapply(split(df, with(df, SD)), function (grp) {
         cat("\\\\\n")
     }
 })
-@ 
+@
     \bottomrule
   \end{tabular}
   \begin{tablenotes}
@@ -1369,7 +1365,7 @@ goop <- lapply(split(df, with(df, SD)), function (grp) {
         cat("\\\\\n")
     }
 })
-@ 
+@
     \bottomrule
   \end{tabular}
   \caption{Speedup of \fct{lmSelect} relative to \fct{lmSubsets}, with
@@ -1451,7 +1447,7 @@ goop <- lapply(split(df, with(df, NVAR)), function (grp) {
         cat("\\\\\n")
     }
 })
-@ 
+@
     \bottomrule
   \end{tabular}
   \caption{Average execution times (in seconds) of \fct{lmSelect}, by
@@ -1496,7 +1492,7 @@ for (row in grp) {
     cat(row)
     cat("\\\\\n")
 }
-@ 
+@
     \bottomrule
   \end{tabular}
   \caption{Average execution times (in seconds) of \fct{lmSelect}, by
@@ -1508,20 +1504,20 @@ for (row in grp) {
 \subsection{Shrinkage methods}
 
 Genetic algorithms for model selection have been considered for
-comparative study.  However, pertinent {\R} packages have been found
+comparative study.  However, pertinent {\R}~packages have been found
 to impose restrictions on the class of problems that can be
 addressed---limited problem size (\pkg{glmulti}), fixed submodel size
 (\pkg{kofnGA}), or no immediate support for IC-based search
 (\pkg{subselect})---, hampering efforts to conduct a meaningful
 comparison.
 
-LASSO~\citep{tibshirani:j_roy_stat_soc_b_met:96} can be seen as an
-alternative to exact variable selection methods, of which package
-\pkg{glmnet} brings an efficient implementation to {\R}.  The function
-\fct{glmnet} computes an entire regularization path and returns a
-sequence of sparse estimators.  The method is not IC-based; rather, it
-employs a modified objective function that induces sparsity by
-penalizing the regression coefficients.
+LASSO~\citep{tibshirani:96} can be seen as an alternative to exact
+variable selection methods, of which package \pkg{glmnet} brings an
+efficient implementation to {\R}.  The function \fct{glmnet} computes
+an entire regularization path and returns a sequence of sparse
+estimators.  The method is not IC-based; rather, it employs a modified
+objective function that induces sparsity by penalizing the regression
+coefficients.
 
 The return value of \fct{glmnet} can be post-processed for comparison
 with \fct{lmSelect}.  For each (sparse) estimator contained in the
@@ -1589,7 +1585,7 @@ goop <- lapply(split(df, with(df, SD)), function (grp) {
         cat("\\\\\n")
     }
 })
-@ 
+@
     \bottomrule
   \end{tabular}
   \caption{Speedup and average number of matches of \fct{glmnet};
@@ -1605,7 +1601,7 @@ goop <- lapply(split(df, with(df, SD)), function (grp) {
 \section{Conclusions}
 \label{sec:conclusions}
 
-An {\R} package for all-subsets variable selection is presented.  It
+An {\R}~package for all-subsets variable selection is presented.  It
 is based on threoretical strategies that have been recently developed.
 A novel algorithm for best-subset variable selection is proposed,
 which selects the best variable-subset model according to a
@@ -1620,7 +1616,7 @@ handle missing data merits investigation.
 
 
 %--------------------------------------------------------------------%
-% section:  Acknowledgments                                         %
+% section:  Acknowledgments                                          %
 %--------------------------------------------------------------------%
 
 \section*{Acknowledgments}

@@ -99,6 +99,10 @@ lmSubsets_fit(x, y, weights = NULL, offset = NULL, include = NULL,
 
 
 \references{
+  Hofmann M, Gatu C, Kontoghiorghes EJ, Colubi A, Zeileis A (2019).
+  lmSubsets: Exact Variable-Subset Selection in Linear Regression for R.
+  \emph{Journal of Statistical Software}.  In press.
+
   Hofmann M, Gatu C, Kontoghiorghes EJ (2007).  Efficient Algorithms for
   Computing the Best Subset Regression Models for Large-Scale Problems.
   \emph{Computational Statistics \& Data Analysis}, \bold{52}, 16--29.

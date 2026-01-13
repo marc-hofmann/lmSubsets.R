@@ -450,7 +450,7 @@ lmSelect(
     ) -> double {
         INTEGER(r_size_arg)[0] = size;
         REAL(r_rss_arg)[0] = rss;
-        return Rf_asReal(Rf_eval(r_call, R_GlobalEnv));
+        return REAL(Rf_eval(r_call, R_GlobalEnv))[0];
     };
 
 

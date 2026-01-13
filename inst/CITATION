@@ -26,8 +26,8 @@ local({
                 "Ana Colubi", "Achim Zeileis"
             ),
             journal = "Journal of Statistical Software",
-            year    = "2018",
-            note    = "Submitted"
+            year    = "2019",
+            note    = "In press"
         ),
 
         bibentry(
