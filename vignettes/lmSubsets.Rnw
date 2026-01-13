@@ -7,6 +7,15 @@
 
 
 %--------------------------------------------------------------------%
+% vignette                                                           %
+%--------------------------------------------------------------------%
+
+% \VignetteIndexEntry{lmSubsets: Exact Variable-Subset Selection in Linear Regression for R}
+% \VignetteKeywords{linear regression, model selection, variable selection, best-subset regression, R}
+% \VignettePackage{lmSubsets}
+
+
+%--------------------------------------------------------------------%
 % Sweave options                                                     %
 %--------------------------------------------------------------------%
 
@@ -51,7 +60,7 @@
 
 \newcommand{\SSS}{\proglang{S}3}
 \newcommand{\R}{\proglang{R}}
-\newcommand{\CPP}{\proglang{C++}}
+\newcommand{\CXX}{\proglang{C++}}
 
 \newcommand{\drop}{\mathrm{drop}}
 \newcommand{\Rset}{\mathbb{R}}
@@ -66,10 +75,10 @@
 %--------------------------------------------------------------------%
 
 \author{%
-  Marc Hofmann\\University of Oviedo\\Cyprus University of Technology
+  Marc Hofmann\thanks{Corresponding author: \email{marc.hofmann@gmail.com}}\\University of Oviedo\\Cyprus University of Technology
   \And Cristian Gatu\\``Alexandru Ioan Cuza''\\University of Iasi
   \And Erricos J. Kontoghiorghes\\Cyprus University of Technology\\Birkbeck, University of London
-  \AND Ana Colubi\\University of Oviedo
+  \AND Ana Colubi\\University of Oviedo\\Justus-Liebig-University Giessen
   \And Achim Zeileis\\Universit\"at Innsbruck
 }
 \Plainauthor{Marc Hofmann, Cristian Gatu, Erricos J. Kontoghiorghes, Ana Colubi, Achim Zeileis}
@@ -84,14 +93,14 @@
   best-subset regression problem selects subset models based on a
   pre-determined criterion.  The package user can choose from exact
   and from approximation algorithms.  The core of the package is
-  written in {\CPP} and provides an efficient implementation of all
+  written in {\CXX} and provides an efficient implementation of all
   the underlying numerical computations.  A case study and benchmark
   results illustrate the usage and the computational efficiency of the
   package.
 }
 
-\Keywords{linear regression, model selection, variable selection, best subset regression, {\R}}
-\Plainkeywords{linear regression, model selection, variable selection, best subset regression, R}
+\Keywords{linear regression, model selection, variable selection, best-subset regression, {\R}}
+\Plainkeywords{linear regression, model selection, variable selection, best-subset regression, R}
 
 \Address{%
   Marc Hofmann\\
@@ -282,7 +291,7 @@ regression~\citet{hofmann:j_comput_graph_stat:10}.  The package
 further proposes approximation methods that compute non-exact
 solutions very quickly: the exigencies toward solution quality are
 relaxed by means of a tolerance parameter that steers the permitted
-degree of error.  The core of the package is written in {\CPP}.  The
+degree of error.  The core of the package is written in {\CXX}.  The
 package is available for the {\R} system for statistical
 computing~\citep{R} from The Comprehensive {\R} Archive Network at
 \url{https://CRAN.R-project.org/package=lmSubsets}.
@@ -640,7 +649,7 @@ The high-level interface methods process the model specification
 before dispatching the call to one of two low-level core functions,
 passing along a regressor matrix \code{x} and a response vector
 \code{y}, together with problem-specific arguments.  The core
-functions act as wrappers around the {\CPP} library, and are declared
+functions act as wrappers around the {\CXX} library, and are declared
 as
 %
 \begin{CodeInput}
@@ -1133,11 +1142,12 @@ considered.
 \section{Benchmark tests}
 \label{sec:benchmarks}
 
+\nopagebreak
 Comparative tests are conducted to evaluate the computational
 efficiency of the proposed methods for exact all-subsets and exact
 best-subset regression.  The \fct{regsubsets} method from package
-\pkg{leaps}~\citep{leaps}, and the \fct{bestglm} method from package
-\pkg{bestglm}~\citep{bestglm} serve as benchmarks, respectively.
+\pkg{leaps}, and the \fct{bestglm} method from package \pkg{bestglm}
+serve as benchmarks, respectively.
 
 Datasets which contain a \qq{true} model are simulated, with
 \code{nobs} observations and \code{nvar} independent variables.  The
@@ -1181,7 +1191,7 @@ previous benchmark, average execution times are determined for
 \fct{bestglm} with and without preordering.  The results are
 illustrated in Table~\ref{tab:bm2}.
 
-\begin{table}
+\begin{table}[t!]
   \centering\scriptsize
   \begin{threeparttable}
   \begin{tabular}{*{7}{>{\ttfamily}r}}
@@ -1234,7 +1244,7 @@ goop <- lapply(split(df, with(df, SD)), function (grp) {
   \end{threeparttable}
 \end{table}
 
-\begin{table}
+\begin{table}[t!]
   \centering\scriptsize
   \begin{threeparttable}
   \begin{tabular}{*{7}{>{\ttfamily}r}}
@@ -1311,7 +1321,7 @@ subsets computed by \fct{lmSubsets} are restricted to sizes between
 $\code{nmin}=30$ and $\code{nmax}=50$ variables; the restriction does
 not apply to \fct{lmSelect}.
 
-\begin{table}
+\begin{table}[t!]
   \centering\scriptsize
   \begin{tabular}{*{10}{>{\ttfamily}r}}
     \toprule
@@ -1399,7 +1409,7 @@ $\code{nobs}=1000$).  The results reveal that the execution time of
 values considered here---is minimal for $\code{penalty}=8.0$, which is
 close to the BIC.
 
-\begin{table}
+\begin{table}[t!]
   \centering\scriptsize
   \begin{tabular}{*{7}{>{\ttfamily}r}}
     \toprule
@@ -1449,7 +1459,7 @@ goop <- lapply(split(df, with(df, NVAR)), function (grp) {
   \label{tab:bm4}
 \end{table}
 
-\begin{table}
+\begin{table}[t!]
   \centering\scriptsize
   \begin{tabular}{*{7}{>{\ttfamily}r}}
     \toprule
@@ -1497,13 +1507,21 @@ for (row in grp) {
 
 \subsection{Shrinkage methods}
 
-The LASSO~\citep{tibshirani:j_roy_stat_soc_b_met:96} provides an
-alternative to exact model selection methods, with an emphasis on
-regularization.  The function \fct{glmnet}~\citep{glmnet} computes an
-entire regularization path and returns a sequence of sparse
-estimators.  The method is not IC-based; rather, it employs a modified
-objective function that induces sparsity by penalizing the regression
-coefficients, and is extremely efficient.
+Genetic algorithms for model selection have been considered for
+comparative study.  However, pertinent {\R} packages have been found
+to impose restrictions on the class of problems that can be
+addressed---limited problem size (\pkg{glmulti}), fixed submodel size
+(\pkg{kofnGA}), or no immediate support for IC-based search
+(\pkg{subselect})---, hampering efforts to conduct a meaningful
+comparison.
+
+LASSO~\citep{tibshirani:j_roy_stat_soc_b_met:96} can be seen as an
+alternative to exact variable selection methods, of which package
+\pkg{glmnet} brings an efficient implementation to {\R}.  The function
+\fct{glmnet} computes an entire regularization path and returns a
+sequence of sparse estimators.  The method is not IC-based; rather, it
+employs a modified objective function that induces sparsity by
+penalizing the regression coefficients.
 
 The return value of \fct{glmnet} can be post-processed for comparison
 with \fct{lmSelect}.  For each (sparse) estimator contained in the
@@ -1532,7 +1550,7 @@ on the distance of the result from the optimal solution (in the OLS
 sense).
 
 
-\begin{table}
+\begin{table}[t!]
   \centering\scriptsize
   \begin{tabular}{*{6}{>{\ttfamily}r}}
     \toprule
@@ -1560,7 +1578,7 @@ goop <- lapply(split(df, with(df, SD)), function (grp) {
                  formatC(grp[, 4], format = "f", digits = 1),
                  formatC(grp[, 5], format = "f", digits = 1))
     grp[1, "SD"] <- formatC(sd, format = "f", digits = 2)
-    
+
     grp[, 3:4] <- paste0(grp[, 3:4], "\\,s")
 
     grp <- apply(grp, 1, paste0, collapse = " & ")

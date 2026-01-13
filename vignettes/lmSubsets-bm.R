@@ -1,17 +1,4 @@
-bm_files <- paste0("bm-0", 1:5, ".R")
-bm_files <- c(bm_files, "bm-lasso.R")
-
-if (any(nok <- !file.exists(bm_files))) {
-    stop ("Missing files: ", paste(bm_files[nok], collapse = " "),
-          call. = FALSE)
-}
-
-if (!file.exists("benchmark.R")) {
-    stop ("Missing file: 'benchmark.R'", call. = FALSE)
-}
-
-
-
+### R code from vignette source 'lmSubsets.Rnw'
 
 ###################################################
 ### code chunk number 15: bm-01
@@ -35,6 +22,7 @@ goop <- lapply(split(df, with(df, SD)), function (grp) {
     })
     grp[1, "SD"] <- formatC(sd, format = "f", digits = 2)
 
+    grp[, 3:5] <- paste0(grp[, 3:5], "\\,s")
     grp <- apply(grp, 1, paste0, collapse = " & ")
 
     cat("\\midrule\n")
@@ -68,6 +56,7 @@ goop <- lapply(split(df, with(df, SD)), function (grp) {
     })
     grp[1, "SD"] <- formatC(sd, format = "f", digits = 2)
 
+    grp[, 3:5] <- paste0(grp[, 3:5], "\\,s")
     grp <- apply(grp, 1, paste0, collapse = " & ")
 
     cat("\\midrule\n")
@@ -109,6 +98,7 @@ goop <- lapply(split(df, with(df, SD)), function (grp) {
                  formatC(grp[, 9], format = "f", digits = 1))
     grp[1, "SD"] <- formatC(sd, format = "f", digits = 2)
 
+    grp[, c(5:6, 8:9)] <- paste0(grp[, c(5:6, 8:9)], "\\,s")
     grp <- apply(grp, 1, paste0, collapse = " & ")
 
     cat("\\midrule\n")
@@ -148,6 +138,7 @@ goop <- lapply(split(df, with(df, NVAR)), function (grp) {
                  formatC(as.matrix(grp[, 3:7]), format = "f", digits = 3))
     grp[1, "NVAR"] <- formatC(nvar, format = "d")
 
+    grp[, 3:7] <- paste0(grp[, 3:7], "\\,s")
     grp <- apply(grp, 1, paste0, collapse = " & ")
 
     cat("\\midrule\n")
@@ -183,6 +174,7 @@ df <- {
 grp <- cbind(formatC(df[, 1], format = "d"),
              formatC(as.matrix(df[, 2:7]), format = "f", digits = 3))
 
+grp[, 2:7] <- paste0(grp[, 2:7], "\\,s")
 grp <- apply(grp, 1, paste0, collapse = " & ")
 
 cat("\\midrule\n")
@@ -214,6 +206,8 @@ goop <- lapply(split(df, with(df, SD)), function (grp) {
                  formatC(grp[, 5], format = "f", digits = 1))
     grp[1, "SD"] <- formatC(sd, format = "f", digits = 2)
 
+    grp[, 3:4] <- paste0(grp[, 3:4], "\\,s")
+
     grp <- apply(grp, 1, paste0, collapse = " & ")
 
     cat("\\midrule\n")
@@ -222,5 +216,3 @@ goop <- lapply(split(df, with(df, SD)), function (grp) {
         cat("\\\\\n")
     }
 })
-
-

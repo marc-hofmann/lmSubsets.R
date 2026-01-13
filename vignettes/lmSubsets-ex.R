@@ -1,4 +1,4 @@
-### R code from vignette source '/home/mcs/Documents/devel/wheels-mcs/trunk/src2/R/pkg/lmSubsets/vignettes/lmSubsets.Rnw'
+### R code from vignette source 'lmSubsets.Rnw'
 
 ###################################################
 ### code chunk number 1: preamble
@@ -90,6 +90,7 @@ stde2 <- unname(sum2$coefficients[, 2])
 stde0 <- formatC(stde0, format = "f", digits = 3)
 stde1 <- formatC(stde1, format = "f", digits = 3)
 stde2 <- formatC(stde2, format = "f", digits = 3)
+
 
 stde0 <- paste0("(", format(stde0, justify = "right"), ")")
 stde1 <- paste0("(", format(stde1, justify = "right"), ")")
@@ -190,5 +191,3 @@ plot(MOS2_all, ylim_ic = c(9000, 9700))
 ###################################################
 MOS2_all <- lmSubsets(temp ~ ., data = IbkTemperature)
 MOS2 <- refit(lmSelect(MOS2_all, penalty = "BIC"))
-
-

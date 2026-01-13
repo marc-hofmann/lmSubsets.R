@@ -1,1 +1,3 @@
 ^tests$
+^inst/doc/lmSubsets-ex.R$
+^inst/doc/lmSubsets-bm.R$
