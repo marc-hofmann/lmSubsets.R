@@ -112,7 +112,7 @@ public:
     std::vector<std::vector<dca_result>>
     results() const noexcept
     {
-        return util::transform(heaps_, [](const auto& h) {
+        return util::transform(heaps_, [](const aux_heap& h) {
                 return h.results();
             });
     }

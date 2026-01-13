@@ -39,6 +39,16 @@ template<typename Scalar>
 class dca_result
 {
 
+public:
+
+    using value_type = int;
+
+    using iterator = typename std::vector<int>::iterator;
+
+    using const_iterator = typename std::vector<int>::const_iterator;
+
+
+
     friend void
     swap(dca_result& a, dca_result& b) noexcept
     {
@@ -47,7 +57,7 @@ class dca_result
 
 
 
-    friend auto
+    friend const_iterator
     cbegin(const dca_result& r) noexcept
     {
         return r.cbegin();
@@ -55,17 +65,11 @@ class dca_result
 
 
 
-    friend auto
+    friend const_iterator
     cend(const dca_result& r) noexcept
     {
         return r.cend();
     }
-
-
-
-public:
-
-    using value_type = int;
 
 
 
@@ -112,7 +116,7 @@ public:
 
 
 
-    auto
+    const_iterator
     cbegin() const noexcept
     {
         return subset_.cbegin();
@@ -120,7 +124,7 @@ public:
 
 
 
-    auto
+    const_iterator
     cend() const noexcept
     {
         return subset_.cend();

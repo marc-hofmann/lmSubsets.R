@@ -69,9 +69,9 @@ public:
     ) const noexcept
     {
         // size + 1  to account for sd as estimated parameter
-        const int npar = size + 1;
+        // const int npar = size + 1;
 
-        return Scalar(-2.0) * ll_(rss) + k_ * Scalar(npar);
+        return Scalar(-2.0) * ll_(rss) + k_ * Scalar(size + 1);
     }
 
 };

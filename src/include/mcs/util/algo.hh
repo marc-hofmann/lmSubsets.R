@@ -41,8 +41,8 @@ using detail::reverse;
 using detail::concat;
 using detail::transform;
 using detail::sort_heap;
-using detail::map;
-using detail::plus;
+// using detail::map;
+// using detail::plus;
 
 
 

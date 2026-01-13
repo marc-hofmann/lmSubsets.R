@@ -86,8 +86,8 @@ abba_all(
 {
     const auto approx = mcs::util::transform(
         tau,
-        [rss_inf = state.rss_inf()](const Scalar tau) {
-            return (tau - 1) * rss_inf;
+        [&state](const Scalar tau) {
+            return (tau - 1) * state.rss_inf();
         }
     );
 

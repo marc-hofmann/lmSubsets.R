@@ -318,7 +318,9 @@ public:
             return {
                 util::concat(
                     prefix,
-                    util::transform(r, util::plus(root_mark))
+                    util::transform(r, [&root_mark](int i) {
+                            return i + root_mark;
+                        })
                 ),
                 r.key()
             };
@@ -326,7 +328,12 @@ public:
 
         return util::concat(
             util::repeat(util::repeat(dca_result(), nbest_), root_mark),
-            util::transform(partial_.results(), util::map(xform))
+            util::transform(
+                partial_.results(),
+                [&xform](const std::vector<dca_result>& r) {
+                    return util::transform(r, xform);
+                }
+            )
         );
     }
 
@@ -418,11 +425,11 @@ public:
         base::next_node();
         partial_.update(
             *base::cur_node_,
-            [this, root_mark = base::root_mark()](
+            [this](
                 const int size,
                 const Scalar rss
             ) -> Scalar {
-                return cost_func_(root_mark + size, rss);
+                return cost_func_(base::root_mark() + size, rss);
             }
         );
     }
@@ -460,7 +467,9 @@ public:
             return {
                 util::concat(
                     prefix,
-                    util::transform(r, util::plus(root_mark))
+                    util::transform(r, [&root_mark](int i) {
+                            return i + root_mark;
+                        })
                 ),
                 r.key()
             };

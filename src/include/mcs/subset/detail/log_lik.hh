@@ -70,9 +70,11 @@ public:
     constexpr Scalar
     operator ()(const Scalar rss) const noexcept
     {
-        const Scalar log_rss = std::log(rss);
+        // const Scalar log_rss = std::log(rss);
 
-        return -nobs_half_ * (LOG_2PI_ - log_nobs_ + log_rss + Scalar(1.0));
+        return -nobs_half_ * (
+            LOG_2PI_ - log_nobs_ + std::log(rss) + Scalar(1.0)
+        );
     }
 
 };

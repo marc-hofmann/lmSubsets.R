@@ -93,7 +93,7 @@ auto
 iota(
     const T& value,
     const int count
-) noexcept
+) noexcept -> std::vector<int>
 {
     std::vector<int> ret(count);
     std::iota(ret.begin(), ret.end(), value);
@@ -107,7 +107,7 @@ auto
 repeat(
     const T& value,
     const int count
-) noexcept
+) noexcept -> std::vector<T>
 {
     return std::vector<T>(count, value);
 }
@@ -118,7 +118,7 @@ template<typename Container>
 auto
 reverse(
     const Container& input
-) noexcept
+) noexcept -> std::vector<typename Container::value_type>
 {
     using value_type = typename Container::value_type;
 
@@ -138,7 +138,7 @@ auto
 concat(
     const ContainerA& a,
     const ContainerB& b
-) noexcept
+) noexcept -> std::vector<typename ContainerA::value_type>
 {
     using value_type = typename ContainerA::value_type;
 
@@ -159,7 +159,9 @@ auto
 transform(
     const Container& input,
     const UnaryFunction& func
-) noexcept
+) noexcept -> std::vector<decltype(
+    func(std::declval<typename Container::value_type>())
+)>
 {
     using value_type = typename Container::value_type;
     using result_type = decltype(func(std::declval<value_type>()));
@@ -180,7 +182,7 @@ auto
 sort(
     const Container& input,
     const Compare& comp
-) noexcept
+) noexcept -> std::vector<typename Container::value_type>
 {
     using value_type = typename Container::value_type;
 
@@ -200,7 +202,7 @@ auto
 sort_heap(
     const Container& input,
     const Compare& comp
-) noexcept
+) noexcept -> std::vector<typename Container::value_type>
 {
     using value_type = typename Container::value_type;
 
@@ -214,25 +216,25 @@ sort_heap(
 
 
 
-template<typename UnaryFunction>
-auto
-map(const UnaryFunction& func) noexcept
-{
-    return [f = func](const auto& _) {
-        return transform(_, f);
-    };
-}
+// template<typename UnaryFunction>
+// auto
+// map(const UnaryFunction& func) noexcept
+// {
+//     return [f = func](const auto& _) {
+//         return transform(_, f);
+//     };
+// }
 
 
 
-template<typename T>
-auto
-plus(const T& value) noexcept
-{
-    return [value = value](const T& x) {
-        return value + x;
-    };
-}
+// template<typename T>
+// auto
+// plus(const T& value) noexcept
+// {
+//     return [](const T& x) {
+//         return value + x;
+//     };
+// }
 
 
 
