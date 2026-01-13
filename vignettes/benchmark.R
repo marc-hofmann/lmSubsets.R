@@ -556,8 +556,8 @@ exec_lmSubsets_benchmark <- function (bm, case_id, rep = 1) {
         if (!is.na(tolerance))  cl$tolerance <- tolerance
         if (!is.na(nbest))  cl$nbest <- nbest
 
-        cl$formula <- x
-        cl$y <- y
+        cl$formula <- quote(x)
+        cl$y <- quote(y)
         cl$intercept <- intercept
 
         time <- system.time(value <- eval(cl))
@@ -628,8 +628,8 @@ exec_lmSelect_benchmark <- function (bm, case_id, rep = 1) {
         if (!is.na(tolerance))  cl$tolerance <- tolerance
         if (!is.na(nbest))  cl$nbest <- nbest
 
-        cl$formula <- x
-        cl$y <- y
+        cl$formula <- quote(x)
+        cl$y <- quote(y)
         cl$intercept <- intercept
 
         time <- system.time(value <- eval(cl))
@@ -697,8 +697,8 @@ exec_leaps_benchmark <- function (bm, case_id, rep = 1) {
         if (!is.na(nbest))  cl$nbest <- nbest
         if (!is.na(nmax))  cl$nvmax <- nmax
 
-        cl$x <- x
-        cl$y <- y
+        cl$x <- quote(x)
+        cl$y <- quote(y)
         cl$intercept <- intercept
 
         time <- system.time(value <- eval(cl))
@@ -776,7 +776,7 @@ exec_bestglm_benchmark <- function (bm, case_id, rep = 1) {
         if (!is.na(nbest))  cl$TopModels <- nbest
         if (!is.na(nmax))  cl$nvmax <- nmax
 
-        cl$Xy <- as.data.frame(cbind(x, y))
+        cl$Xy <- quote(as.data.frame(cbind(x, y)))
         cl$intercept <- intercept
 
         time <- system.time(value <- eval(cl))

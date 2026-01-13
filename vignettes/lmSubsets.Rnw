@@ -249,14 +249,15 @@ returned by an approximation algorithm, on the other hand, can be
 prroven to lie within well specified bounds of the optimum.
 
 Several packages that deal with variable subset selection are
-available on the {\R} platform.  The package \pkg{leaps}~\citep{leaps}
+available on the {\R} platform.  Package \pkg{leaps}~\citep{leaps}
 implements exact, non-exhaustive algorithms for subset regression
-based on~\citet{miller:02}.  Exhaustive algorithms have been
-considered within the context of generalized linear
-models~\citep[package \pkg{bestglm},][]{bestglm}.  The package
-\pkg{subselect} proposes simulated annealing algorithms based on the
-work of~\citet{duarte_silva:j_multivariate_anal:01}.  Furthermore,
-genetic algorithms for generalized linear models have been implemented
+based on~\citet{miller:02}, extended to generalized linear models by
+package \pkg{bestglm}~\citep{bestglm}.  Package
+\pkg{BeSS}~\citep{BeSS} implements algorithms for logistic and Cox
+proportional hazard models, whereas package \pkg{subselect} proposes
+simulated annealing algorithms based on the work
+of~\citet{duarte_silva:j_multivariate_anal:01}.  Furthermore, genetic
+algorithms for generalized linear models have been implemented
 by~\citet[package \pkg{glmulti}]{calcagno:j_stat_softw:10}
 and~\citet[package \pkg{kofnGA}]{wolters:j_stat_softw:15}.  Non-exact
 algorithms for regularized estimation of parametric models with
