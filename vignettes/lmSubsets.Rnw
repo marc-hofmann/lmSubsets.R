@@ -99,7 +99,7 @@
   package.
 
   Originally published in the Journal of Statistical
-  Software~\citep{hofmann:19}.
+  Software~\citep{hofmann:20}.
 }
 
 \Keywords{linear regression, model selection, variable selection, best-subset regression, {\R}}
@@ -426,8 +426,7 @@ indiscriminately preorder variables.  A parameter---the preordering
 radius $p$---has been introduced to control the degree of
 preordering~\citep{hofmann:07}.  It accepts a value between $p=0$ (no
 preordering) and $p=N$ (preordering in all nodes); when $p=1$,
-preordering is performed in the root node only.  Typically, $p=\lfloor
-N/3\rfloor$ produces better results in terms of execution time.
+preordering is performed in the root node only.
 
 The computational efficiency of the BBA is improved by allowing the
 algorithm to prune non-redundant branches of the regression tree.  The
@@ -1168,10 +1167,10 @@ system.
 Benchmark~1 concerns itself with all-subsets selection.  The
 \fct{lmSubsets} method is compared to \fct{regsubsets}.  The
 complexity mainly depends on the number of variables (\code{nvar}):
-The algorithms employ the QRD to compress the data into a square
-$\code{nvar}\times\code{nvar}$ matrix; the initial cost of
-constructing the QRD is negligible.  Data configurations with varying
-sizes ($\code{nvar}=20,25,30,35,40$) and degrees of noise
+The algorithms employ the QR decomposition to compress the data into a
+square $\code{nvar}\times\code{nvar}$ matrix; the initial cost of
+constructing the QR decomposition is negligible.  Data configurations
+with varying sizes ($\code{nvar}=20,25,30,35,40$) and degrees of noise
 ($\code{sigma}=0.05,0.10\text{, }0.50,1.00,5.00$) are considered; in
 all cases, \code{nobs} = 1000 and $\code{ntrue} =
 \lfloor\code{nvar}/2\rfloor$.  For each configuration, five random

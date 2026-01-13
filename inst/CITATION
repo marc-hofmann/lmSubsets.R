@@ -20,24 +20,58 @@ local({
 
         bibentry(
             bibtype = "Article",
-            title   = paste0(title, " for R"),
+            title   = paste0(title, " for {R}"),
             author  = c(
-                "Marc Hofmann", "Cristian Gatu", "Erricos J. Kontoghiorghes",
-                "Ana Colubi", "Achim Zeileis"
+                person(
+                    given = "Marc",
+                    family = "Hofmann",
+                    email = "marc.hofmann@gmail.com"
+                ),
+                person(
+                    given = "Cristian",
+                    family = "Gatu"
+                ),
+                person(
+                    given = c("Erricos", "J."),
+                    family = "Kontoghiorghes"
+                ),
+                person(
+                    given = "Ana",
+                    family = "Colubi"
+                ),
+                person(
+                    given = "Achim",
+                    family = "Zeileis"
+                )
             ),
             journal = "Journal of Statistical Software",
-            year    = "2019",
-            note    = "In press"
+            year    = "2020",
+            volume  = "93",
+            number  = "3",
+            pages   = "1--21",
+            doi     = "10.18637/jss.v093.i03"
         ),
 
         bibentry(
             bibtype = "Article",
             title   = paste(
-                "Efficient algorithms for computing the best subset",
-                "regression models for large-scale problems"
+                "Efficient algorithms for computing",
+                "the best subset regression models",
+                "for large-scale problems"
             ),
             author  = c(
-                "Marc Hofmann", "Cristian Gatu", "Erricos J. Kontoghiorghes"
+                person(
+                    given = "Marc",
+                    family = "Hofmann"
+                ),
+                person(
+                    given = "Cristian",
+                    family = "Gatu"
+                ),
+                person(
+                    given = c("Erricos", "J."),
+                    family = "Kontoghiorghes"
+                )
             ),
             journal = "Computational Statistics & Data Analysis",
             year    = "2007",
@@ -52,7 +86,16 @@ local({
                 "Branch-and-bound algorithms for computing",
                 "the best subset regression models"
             ),
-            author  = c("Cristian Gatu", "Erricos J. Kontoghiorghes"),
+            author  = c(
+                person(
+                    given = "Cristian",
+                    family = "Gatu"
+                ),
+                person(
+                    given = c("Erricos", "J."),
+                    family = "Kontoghiorghes"
+                )
+            ),
             journal = "Journal of Computational and Graphical Statistics",
             year    = "2006",
             volume  = "15",
@@ -63,10 +106,13 @@ local({
         bibentry(
             bibtype = "PhdThesis",
             title   = paste(
-                "Algorithms for statistical model selection and robust",
-                "estimation"
+                "Algorithms for statistical model selection",
+                "and robust estimation"
             ),
-            author  = "Marc Hofmann",
+            author  = person(
+                given = "Marc",
+                family = "Hofmann"
+            ),
             school  = "University of Neuchatel, Switzerland",
             year    = "2009",
             note    = "Supervisor: Erricos J. Kontoghiorghes"

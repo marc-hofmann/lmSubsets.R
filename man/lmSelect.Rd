@@ -92,9 +92,10 @@ lmSelect_fit(x, y, weights = NULL, offset = NULL, include = NULL,
 
 
 \references{
-  Hofmann M, Gatu C, Kontoghiorghes EJ, Colubi A, Zeileis A (2019).
-  lmSubsets: Exact Variable-Subset Selection in Linear Regression for R.
-  \emph{Journal of Statistical Software}.  In press.
+  Hofmann M, Gatu C, Kontoghiorghes EJ, Colubi A, Zeileis A (2020).
+  lmSubsets: Exact Variable-Subset Selection in Linear Regression for
+  R.  \emph{Journal of Statistical Software}.  \bold{93}, 1--21.
+  doi:10.18637/jss.v093.i03.
 }
 
 
