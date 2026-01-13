@@ -1,6 +1,6 @@
 Package: lmSubsets
-Version: 0.5-1
-Date: 2020-05-23
+Version: 0.5-2
+Date: 2021-02-03
 Title: Exact Variable-Subset Selection in Linear Regression
 Authors@R: c(person(given = "Marc", family = "Hofmann",
                     role  = c("aut", "cre"),
@@ -31,7 +31,7 @@ Description: Exact and approximation algorithms for variable-subset
   selection in ordinary linear regression models.  Either compute all
   submodels with the lowest residual sum of squares, or determine the
   single-best submodel according to a pre-determined statistical
-  criterion.  Hofmann et al. (2020) <10.18637/jss.v093.i03>.
+  criterion.  Hofmann et al. (2020) <doi:10.18637/jss.v093.i03>.
 Depends: R (>= 3.4.0)
 SystemRequirements: C++11
 Imports: stats, graphics, utils
