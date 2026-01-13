@@ -1,4 +1,4 @@
-// Copyright 2018  Marc Hofmann
+// Copyright  2009-2020  Marc Hofmann
 //
 // This file is part of the 'lmSubsets' R extension.
 //

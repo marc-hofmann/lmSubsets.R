@@ -2,8 +2,10 @@
 // gsl-lite is based on GSL: Guideline Support Library.
 // For more information see https://github.com/martinmoene/gsl-lite
 //
-// Copyright (c) 2015-2018 Martin Moene
-// Copyright (c) 2015-2018 Microsoft Corporation. All rights reserved.
+// Modified by Marc Hofmann for use in R.
+//
+// Copyright  2015-2018  Martin Moene
+// Copyright  2015-2018  Microsoft Corporation
 //
 // This code is licensed under the MIT License (MIT).
 //
@@ -29,6 +31,16 @@
 #include <string>
 #include <utility>
 #include <vector>
+
+
+//
+// CRAN policy violation:  call to 'std::terminate()' not allowed
+//
+// Substitute calls to 'std::terminate()' by a call to 'Rf_error()'.
+//
+#define R_NO_REMAP
+#include <R.h>  // for 'Rf_error()'
+
 
 #define  gsl_lite_VERSION "0.29.0"
 
@@ -512,7 +524,11 @@ gsl_api inline gsl_constexpr14 auto fail_fast_assert( bool cond ) -> void
 {
     struct F { static gsl_constexpr14 void f(){}; };
 
-    !cond ? std::terminate() : F::f();
+    //
+    // CRAN policy violation:  call to 'std::terminate()' not allowed
+    //
+    //!cond ? std::terminate() : F::f();
+    !cond ? Rf_error("terminate in gsl-lite-R.hh") : F::f();
 }
 
 # endif
@@ -532,7 +548,11 @@ gsl_api inline gsl_constexpr14 void fail_fast_assert( bool cond, char const * co
 gsl_api inline gsl_constexpr14 void fail_fast_assert( bool cond ) gsl_noexcept
 {
     if ( !cond )
-        std::terminate();
+        //
+        // CRAN policy violation:  call to 'std::terminate()' not allowed
+        //
+        //std::terminate();
+        Rf_error("terminate in gsl-lite-R.hh");
 }
 
 # endif
@@ -822,7 +842,11 @@ gsl_api inline T narrow( U u )
 #if gsl_CONFIG_CONTRACT_VIOLATION_THROWS_V
         throw narrowing_error();
 #else
-        std::terminate();
+        //
+        // CRAN policy violation:  call to 'std::terminate()' not allowed
+        //
+        //std::terminate();
+        Rf_error("terminate in gsl-lite-R.hh");
 #endif
     }
 
@@ -836,7 +860,11 @@ gsl_api inline T narrow( U u )
 #if gsl_CONFIG_CONTRACT_VIOLATION_THROWS_V
         throw narrowing_error();
 #else
-        std::terminate();
+        //
+        // CRAN policy violation:  call to 'std::terminate()' not allowed
+        //
+        //std::terminate();
+        Rf_error("terminate in gsl-lite-R.hh");
 #endif
     }
     return t;

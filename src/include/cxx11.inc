@@ -1,5 +1,5 @@
-// Copyright 2018  Marc Hofmann
-// Copyright 2008-2018  Free Software Foundation, Inc.
+// Copyright  2009-2020  Marc Hofmann
+// Copyright  2008-2018  Free Software Foundation, Inc.
 //
 // This file is part of the 'lmSubsets' R extension.  It is based on
 // the GNU ISO C++ Library.

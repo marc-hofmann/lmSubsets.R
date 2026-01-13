@@ -1,7 +1,7 @@
-// Copyright 2018  Marc Hofmann
+// Copyright  2009-2020  Marc Hofmann
 //
 // This file is part of the 'mcs' library (see
-// <https://github.com/marc-hofmann/mcs/>).
+// <https://github.com/marc-hofmann/mcs.cc/>).
 //
 // 'mcs' is free software: you can redistribute it and/or modify it
 // under the terms of the GNU General Public License as published by

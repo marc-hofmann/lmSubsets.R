@@ -1,7 +1,7 @@
-// Copyright 2018  Marc Hofmann
+// Copyright  2009-2020  Marc Hofmann
 //
 // This file is part of the 'mcs' library (see
-// <https://github.com/marc-hofmann/mcs/>).
+// <https://github.com/marc-hofmann/mcs.cc/>).
 //
 // 'mcs' is free software: you can redistribute it and/or modify it
 // under the terms of the GNU General Public License as published by
@@ -269,8 +269,8 @@ public:
         const auto max = std::max_element(aux_1.begin(), aux_1.begin() + p);
         const int j = std::distance(aux_1.begin(), max);
 
-        dca_subset::permute_partial_1(subset_, k, j);
-        qrz.permute_partial_1(rz_span, k, j);
+        dca_subset::permute_partial_2(subset_, k, j);
+        qrz.permute_partial_2(rz_span, k, j);
 
         swap(result);
     }

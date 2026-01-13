@@ -1,4 +1,4 @@
-## Copyright 2018  Marc Hofmann and Achim Zeileis
+## Copyright  2009-2020  Marc Hofmann and Achim Zeileis
 ##
 ## This file is part of the 'lmSubsets' R extension.
 ##

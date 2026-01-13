@@ -3,7 +3,7 @@
 
 
 
-#include "gsl/gsl-lite.hh"
+#include "gsl/gsl-lite-R.hh"
 
 
 

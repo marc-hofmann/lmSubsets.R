@@ -1,7 +1,7 @@
-// Copyright 2018  Marc Hofmann
+// Copyright  2009-2020  Marc Hofmann
 //
 // This file is part of the 'mcs' library (see
-// <https://github.com/marc-hofmann/mcs/>).
+// <https://github.com/marc-hofmann/mcs.cc/>).
 //
 // 'mcs' is free software: you can redistribute it and/or modify it
 // under the terms of the GNU General Public License as published by
@@ -352,9 +352,9 @@ class dca_state_best : private dca_state_base<Scalar, NodeXfer>
     static_assert(
         std::is_same<
             typename cost_func_traits::signature,
-            double(int,double)
+            Scalar(int,Scalar)
         >::value,
-        "cost function must be 'double(int,double)'"
+        "cost function must be 'Scalar(int,Scalar)'"
     );
 
 
