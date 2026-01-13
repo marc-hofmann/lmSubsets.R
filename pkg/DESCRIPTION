@@ -1,6 +1,6 @@
 Package: lmSubsets
-Version: 0.5-2
-Date: 2021-02-03
+Version: 0.5-3
+Date: 2026-01-15
 Title: Exact Variable-Subset Selection in Linear Regression
 Authors@R: c(person(given = "Marc", family = "Hofmann",
                     role  = c("aut", "cre"),
@@ -23,17 +23,15 @@ Authors@R: c(person(given = "Marc", family = "Hofmann",
                     comment = "for the GSL Lite library"),
              person(given = "Microsoft Corporation",
                     role = "cph",
-                    comment = "for the GSL Lite library"),
-             person(given = "Free Software Foundation, Inc.",
-                    role = "cph",
-                    comment = "for snippets from the GNU ISO C++ Library"))
+                    comment = "for the GSL Lite library"))
+Maintainer: Marc Hofmann <marc.hofmann@gmail.com>
 Description: Exact and approximation algorithms for variable-subset
   selection in ordinary linear regression models.  Either compute all
   submodels with the lowest residual sum of squares, or determine the
   single-best submodel according to a pre-determined statistical
   criterion.  Hofmann et al. (2020) <doi:10.18637/jss.v093.i03>.
-Depends: R (>= 3.4.0)
-SystemRequirements: C++11
+Depends: R (>= 3.5.0)
+SystemRequirements: C++17,
 Imports: stats, graphics, utils
 License: GPL (>= 3)
 URL: https://github.com/marc-hofmann/lmSubsets.R

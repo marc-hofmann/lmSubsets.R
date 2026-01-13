@@ -75,7 +75,7 @@ data(AirPollution)
 
 \source{
 
-  \url{http://lib.stat.cmu.edu/datasets/pollution}
+  \url{https://lib.stat.cmu.edu/datasets/pollution}
 
 }
 

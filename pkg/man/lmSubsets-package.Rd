@@ -45,7 +45,7 @@
 
   Hofmann M, Gatu C, Kontoghiorghes EJ (2007).  Efficient algorithms for
   computing the best subset regression models for large-scale problems.
-  \emph{Computational Statistics \& Data Analysis}, \strong{52}, 16--29.
+  \emph{Computational Statistics & Data Analysis}, \strong{52}, 16--29.
   \doi{10.1016/j.csda.2007.03.017}.
 
   Gatu C, Kontoghiorghes EJ (2006).  Branch-and-bound algorithms for

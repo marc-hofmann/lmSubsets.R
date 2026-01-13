@@ -1,4 +1,4 @@
-// Copyright  2009-2020  Marc Hofmann
+// Copyright  2009-2026  Marc Hofmann
 //
 // This file is part of the 'mcs' library (see
 // <https://github.com/marc-hofmann/mcs.cc/>).
@@ -23,7 +23,7 @@
 
 
 
-#include <type_traits>  // std::is_same
+#include <type_traits>  // std::is_same, std::is_invocable_r
 #include <utility>  // std::declval
 #include <vector>
 
@@ -37,7 +37,6 @@
 
 #include "mcs/util/algo.hh"  // algo::concat, algo::iota, algo::map, algo::plus,
                              // algo::repeat, algo::transform
-#include "mcs/util/function_traits.hh"
 
 
 
@@ -347,14 +346,9 @@ template<typename Scalar,
 class dca_state_best : private dca_state_base<Scalar, NodeXfer>
 {
 
-    using cost_func_traits = mcs::util::function_traits<CostFunc>;
-
     static_assert(
-        std::is_same<
-            typename cost_func_traits::signature,
-            Scalar(int,Scalar)
-        >::value,
-        "cost function must be 'Scalar(int,Scalar)'"
+        std::is_invocable_r_v<Scalar, CostFunc, int, Scalar>,
+        "cost function must be of type 'Scalar(int,Scalar)'"
     );
 
 
