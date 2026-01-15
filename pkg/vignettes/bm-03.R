@@ -88,22 +88,22 @@ if (is.null(bm)) {
     bm <-  lmSelect_benchmark(bm, DATA_ID = 16:20, TOLERANCE = 0.1)
 
 
+    ## Run benchmark.
+    ##
+    bm <- run_benchmark(bm)
+
+
+    ## Summarize benchmark.
+    ##
+    bm <- summary_benchmark(bm)
+
+
+    ## Save benchmark.
+    ##
+    save_benchmark(bm)
+
+
 }
-
-
-## Run benchmark.
-##
-bm <- run_benchmark(bm)
-
-
-## Summarize benchmark.
-##
-bm <- summary_benchmark(bm)
-
-
-## Save benchmark.
-##
-save_benchmark(bm)
 
 
 

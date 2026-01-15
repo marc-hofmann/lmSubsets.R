@@ -10,7 +10,7 @@ bm <- load_benchmark(NAME)
 
 
 ## Initialize benchmark.
-##
+##    
 if (is.null(bm)) {
 
 
@@ -76,22 +76,22 @@ if (is.null(bm)) {
     bm <- leaps_benchmark(bm, DATA_ID = 1:25, PREORD = TRUE )
 
 
+    ## Run benchmark.
+    ##
+    bm <- run_benchmark(bm)
+
+
+    ## Summarize benchmark.
+    ##  
+    bm <- summary_benchmark(bm)
+
+
+    ## Save benchmark.
+    ##
+    save_benchmark(bm)
+
+
 }
-
-
-## Run benchmark.
-##
-bm <- run_benchmark(bm)
-
-
-## Summarize benchmark.
-##
-bm <- summary_benchmark(bm)
-
-
-## Save benchmark.
-##
-save_benchmark(bm)
 
 
 

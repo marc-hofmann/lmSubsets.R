@@ -60,22 +60,22 @@ if (is.null(bm)) {
     bm <- lmSelect_benchmark(bm, DATA_ID = 3, IC = c(1, 2, 4, 8, 16, 32))
 
 
+    ## Run benchmark.
+    ##
+    bm <- run_benchmark(bm)
+
+
+    ## Summarize benchmark.
+    ##
+    bm <- summary_benchmark(bm)
+
+
+    ## Save benchmark.
+    ##
+    save_benchmark(bm)
+
+
 }
-
-
-## Run benchmark.
-##
-bm <- run_benchmark(bm)
-
-
-## Summarize benchmark.
-##
-bm <- summary_benchmark(bm)
-
-
-## Save benchmark.
-##
-save_benchmark(bm)
 
 
 

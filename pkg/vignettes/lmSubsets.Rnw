@@ -32,10 +32,10 @@
 
 \usepackage{lmodern}
 
-\usepackage{amsmath,amssymb}
+\usepackage{mathtools}
 \usepackage{bbm}
 
-\usepackage{pstricks,pst-tree}
+\usepackage{tikz,forest}
 
 \usepackage{array,booktabs}
 
@@ -63,7 +63,7 @@
 \newcommand{\CXX}{\proglang{C++}}
 
 \newcommand{\drop}{\mathrm{drop}}
-\newcommand{\Rset}{\mathbb{R}}
+\newcommand{\Rset}{\mathbbm{R}}
 \newcommand{\rss}{\mathrm{RSS}}
 \newcommand{\card}[1]{\left\lvert{#1}\right\rvert}
 \newcommand{\norm}[1]{\left\lVert{#1}\right\lVert_2}
@@ -345,32 +345,27 @@ a regression tree for $N=5$ variables.  The index $k$ is symbolized by
 a bullet ($\bullet$).  The subleading models are listed in each node.
 
 \begin{figure}[t!]
-  \def\node#1#2{\TR{\psframebox[framearc=0.5]{\sffamily${\text{#1}\atop\text{#2}}$}}}
+  \def\lmsubsets#1#2#3{%
+    $\textsf{#1$\bullet$#2}\atop\textsf{[\,#3\,]}$}
   \begin{center}
-    \pstree[levelsep=8ex,treesep=2.5ex,edge=\ncline]{%
-      \node{$\bullet$12345}{1, 12, 123, 1234, 12345}}{%
-      \pstree{%
-        \node{$\bullet$2345}{2, 23, 234, 2345}}{%
-        \pstree{%
-          \node{$\bullet$345}{3, 34, 345}}{%
-          \pstree{%
-            \node{$\bullet$45}{4, 45}}{%
-            \node{$\bullet$5}{5}}
-          \node{3$\bullet$5}{35}}
-        \pstree{%
-          \node{2$\bullet$45}{24, 245}}{%
-          \node{2$\bullet$5}{25}}
-        \node{23$\bullet$5}{235}}
-      \pstree{%
-        \node{1$\bullet$345}{13, 134, 1345}}{%
-        \pstree{%
-          \node{1$\bullet$45}{14, 145}}{%
-          \node{1$\bullet$5}{15}}
-        \node{13$\bullet$5}{135}}
-      \pstree{%
-        \node{12$\bullet$45}{124, 1245}}{%
-        \node{12$\bullet$5}{125}}
-      \node{123$\bullet$5}{1235}}
+    \begin{forest}
+      [\lmsubsets{}{12345}{1, 12, 123, 1234, 12345}, for tree={l=10ex, s sep=4ex, thick, draw=black, fill=lightgray, rounded corners=5pt}
+        [\lmsubsets{}{2345}{2, 23, 234, 2345}
+          [\lmsubsets{}{345}{3, 34, 345}
+            [\lmsubsets{}{45}{4, 45}
+              [\lmsubsets{}{5}{5}]]
+            [\lmsubsets{3}{5}{35}]]
+          [\lmsubsets{2}{45}{24, 245}
+            [\lmsubsets{2}{5}{25}]]
+          [\lmsubsets{23}{5}{235}]]
+        [\lmsubsets{1}{345}{13, 134, 1345}
+          [\lmsubsets{1}{45}{14, 145}
+            [\lmsubsets{1}{5}{15}]]
+          [\lmsubsets{13}{5}{135}]]
+        [\lmsubsets{12}{45}{124, 1245}
+          [\lmsubsets{12}{5}{125}]]
+        [\lmsubsets{123}{5}{1235}]]
+    \end{forest}
   \end{center}
   \caption{All-subsets regression tree for $N=5$ variables.  Nodes are
     shown together with their subleading models.}
@@ -483,6 +478,7 @@ nodes.
 \section[Implementation in R]{Implementation in {\R}}
 \label{sec:R}
 
+\nopagebreak
 The {\R}~package \pkg{lmSubsets} provides a library of methods for
 variable subset selection in linear regression.  Two {\SSS} classes
 are defined, namely \class{lmSubsets} and \class{lmSelect}, that
